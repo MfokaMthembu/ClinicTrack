@@ -1,0 +1,157 @@
+# Laravel Backend
+clinikTrak-clinikTrak-backend/vendor/
+clinikTrak-backend/node_modules/
+clinikTrak-backend/public/hot
+clinikTrak-backend/public/storage
+clinikTrak-backend/storage/*.key
+clinikTrak-backend/storage/logs/
+clinikTrak-backend/storage/framework/cache/data/
+clinikTrak-backend/storage/framework/sessions/
+clinikTrak-backend/storage/framework/testing/
+clinikTrak-backend/storage/framework/views/
+clinikTrak-backend/storage/app/public/
+clinikTrak-backend/.env
+clinikTrak-backend/.env.backup
+clinikTrak-backend/.env.production
+clinikTrak-backend/.phpunit.result.cache
+clinikTrak-backend/Homestead.json
+clinikTrak-backend/Homestead.yaml
+clinikTrak-backend/auth.json
+clinikTrak-backend/npm-debug.log
+clinikTrak-backend/yarn-error.log
+clinikTrak-backend/.fleet
+clinikTrak-backend/.idea
+clinikTrak-backend/.vscode
+clinikTrak-backend/bootstrap/cache/*.php
+
+# React Frontend
+frontend/build/
+frontend/node_modules/
+frontend/coverage/
+frontend/.nyc_output
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Mobile App (empty for now, but ready for future)
+mobile-app/node_modules/
+mobile-app/.env
+mobile-app/build/
+mobile-app/dist/
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs
+*.log
+
+# Temporary folders
+tmp/
+temp/
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs
+*.log
+
+# Temporary folders
+tmp/
+temp/
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs
+*.log
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
