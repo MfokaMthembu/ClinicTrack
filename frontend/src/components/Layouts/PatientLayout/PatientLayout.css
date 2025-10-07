@@ -1,0 +1,330 @@
+/* Reset only inside dashboard */
+.patient-layout * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.patient-layout {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+
+/* Header */
+.patient-layout .header {
+    background-color: #ffffff;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.patient-layout .header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.patient-layout .menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.patient-layout .menu-toggle:hover {
+    background-color: #f0f0f0;
+}
+
+.patient-layout .menu-icon-item {
+  width: 24px;   /* container size */
+  height: 24px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.patient-layout .menu-icon-item img {
+  width: 100%;   /* force scale */
+  height: auto;
+  object-fit: contain;
+}
+
+.patient-layout .menu-icon {
+    width: 24px;
+    height: 18px;
+    position: relative;
+}
+
+.patient-layout .menu-icon span {
+    display: block;
+    height: 2px;
+    background-color: #333;
+    margin: 4px 0;
+    border-radius: 1px;
+    transition: 0.3s;
+}
+
+.patient-layout .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.patient-layout .logo {
+    width: 40px;
+    height: 40px;
+   
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.patient-layout .logo::before {
+    content: '⚕';
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.patient-layout .hospital-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d5a27;
+}
+
+.patient-layout .header-center {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 40px;
+}
+
+.patient-layout .search-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Search icon */
+.patient-dashboar .search-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.patient-dashboar .search-icon img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Notifications */
+.patient-dashboar .notification-badge {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.patient-dashboar .notification-badge img {
+  max-width: 30px;    /* control actual bell size */
+  max-height: 30px;
+  height: auto;
+  object-fit: contain;
+}
+
+.patient-layout .search-input {
+    width: 100%;
+    padding: 12px 20px 12px 45px;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 14px;
+    background-color: #f8f9fa;
+    transition: all 0.3s;
+}
+
+.patient-layout .search-input:focus {
+    outline: none;
+    border-color: #2d5a27;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+}
+
+.patient-layout .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.patient-layout .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.patient-layout .notification-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.patient-layout .notification-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.patient-layout .notification-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background-color: #dc2626;
+    color: white;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}
+
+.patient-layout .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.patient-layout .user-profile:hover {
+    background-color: #f0f0f0;
+}
+
+.patient-layout .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2d5a27, #1e3a1a);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.patient-layout .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.patient-layout .user-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.patient-layout .user-role {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Sidebar */
+.patient-layout .sidebar {
+    position: fixed;
+    left: -280px;
+    top: 70px;
+    width: 280px;
+    height: calc(100vh - 70px);
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    transition: left 0.3s ease;
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.patient-layout .sidebar.open {
+    left: 0;
+}
+
+.patient-layout .sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.patient-layout .sidebar-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d5a27;
+    margin-bottom: 5px;
+}
+
+.patient-layout .sidebar-subtitle {
+    font-size: 14px;
+    color: #666;
+}
+
+.patient-layout .sidebar-menu {
+    padding: 20px 0;
+}
+
+.patient-layout .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s;
+    gap: 12px;
+}
+
+.patient-layout .menu-item:hover {
+    background-color: #f0f7f0;
+    color: #2d5a27;
+}
+
+.patient-layout .menu-item.active {
+    background-color: #e8f5e8;
+    color: #2d5a27;
+    border-right: 3px solid #2d5a27;
+}
+
+.patient-layout .menu-icon-item {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main Content */
+.patient-layout .main-content {
+    margin-top: 70px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+.patient-layout .main-content.sidebar-open {
+    margin-left: 280px;
+}

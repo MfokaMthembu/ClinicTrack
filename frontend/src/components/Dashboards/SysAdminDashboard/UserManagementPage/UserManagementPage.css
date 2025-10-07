@@ -1,0 +1,82 @@
+.admin-dashboard .content-header {
+  margin-bottom: 30px;
+}
+
+.admin-dashboard .page-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2d5a27; /* heading green */
+  margin-bottom: 8px;
+}
+
+.admin-dashboard .page-subtitle {
+  color: #666;
+  font-size: 16px;
+}
+
+/* Flex row for search + buttons */
+.admin-dashboard .search-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.admin-dashboard .search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #2d5a27; 
+  background-color: #f5f9f5; /* light mint background */
+  border-radius: 8px;
+  padding: 6px 10px;
+  width: 240px;
+}
+
+.admin-dashboard .search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  color: #2d5a27;
+  flex: 1;
+  font-size: 14px;
+}
+
+.admin-dashboard .search-box .icon {
+  color: #2d5a27; /* green search icon */
+  font-size: 16px;
+}
+
+.admin-dashboard .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #2b6e3f;; /* button green */
+  color: white; 
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.admin-dashboard .btn:hover {
+  background: #1e401c; /* darker green */
+}
+
+.admin-dashboard .btn .icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* keeps icons white */
+}
+
+.admin-dashboard .search-icon-btn {
+  position: absolute;
+  right: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #2d5a27; /* green */
+  font-size: 16px;
+}
