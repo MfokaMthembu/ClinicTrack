@@ -1,0 +1,113 @@
+.inventory-dashboard .content-header {
+  margin-bottom: 30px;
+}
+
+.inventory-dashboard .page-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2d5a27;
+  margin-bottom: 8px;
+}
+
+.inventory-dashboard .page-subtitle {
+  color: #666;
+  font-size: 16px;
+}
+
+.inventory-dashboard .right-controls {
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.inventory-dashboard .add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #0d5e25;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.inventory-dashboard .add-btn img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.inventory-dashboard .add-btn:hover {
+  background-color: #128031;
+}
+
+/* Modal Styles */
+.inventory-dashboard .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.inventory-dashboard .modal-container {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.inventory-dashboard .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+.inventory-dashboard .modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #0b7a2d;
+  font-weight: 600;
+}
+
+.inventory-dashboard .close-btn {
+  background: none;
+  border: none;
+  font-size: 32px;
+  line-height: 1;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.inventory-dashboard .close-btn:hover {
+  color: #0b7a2d;
+}
+
+.inventory-dashboard .modal-body {
+  padding: 24px;
+}

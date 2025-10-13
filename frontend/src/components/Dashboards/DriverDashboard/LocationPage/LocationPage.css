@@ -1,0 +1,349 @@
+/* Container */
+.location-dashboard {
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  background: #f5f6f8;
+}
+
+/* Page Title & Subtitle */
+.location-dashboard .page-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2d5a27;
+  margin-bottom: 0.25rem;
+}
+
+.location-dashboard .page-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Alerts */
+.location-dashboard .alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.location-dashboard .alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.location-dashboard .alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Loading Text */
+.location-dashboard .loading-text {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+/* No Ambulance */
+.location-dashboard .no-ambulance {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.location-dashboard .no-ambulance-content {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.location-dashboard .btn-register {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #28a745;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.location-dashboard .btn-register:hover {
+  background-color: #218838;
+}
+
+/* Locations Grid */
+.location-dashboard .locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Location Card */
+.location-dashboard .location-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.location-dashboard .location-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Header */
+.location-dashboard .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.location-dashboard .card-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d5a27;
+}
+
+.location-dashboard .status-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Card Body */
+.location-dashboard .card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.location-dashboard .location-info {
+  background: #e8f5e9;
+  padding: 0.75rem;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.location-dashboard .location-info strong {
+  color: #212529;
+}
+
+/* Card Actions */
+.location-dashboard .card-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.location-dashboard .btn-update-location,
+.location-dashboard .btn-toggle-status {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: white;
+}
+
+.location-dashboard .btn-update-location {
+  background-color: #2d5a27;
+}
+
+.location-dashboard .btn-update-location:hover {
+  background-color: #adb425;
+}
+
+.location-dashboard .btn-toggle-status {
+  background-color: #28a745;
+}
+
+.location-dashboard .btn-toggle-status[style*="background-color: #6c757d"] {
+  background-color: #6c757d !important;
+}
+
+/* Map Section */
+.location-dashboard .location-map {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Modal Styles */
+.location-dashboard .modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.location-dashboard .modal-container {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.location-dashboard .modal-large {
+  max-width: 900px;
+}
+
+.location-dashboard .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 2px solid #2d5a27;
+  background: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.location-dashboard .modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d5a27;
+}
+
+.location-dashboard .close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #6c757d;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.location-dashboard .close-btn:hover {
+  color: #dc3545;
+}
+
+.location-dashboard .modal-body {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Form Fields */
+.location-dashboard .form-field {
+  margin-bottom: 1rem;
+}
+
+.location-dashboard .form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.location-dashboard .form-field input,
+.location-dashboard .form-field select,
+.location-dashboard .form-field textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+}
+
+.location-dashboard .form-field input:focus,
+.location-dashboard .form-field select:focus,
+.location-dashboard .form-field textarea:focus {
+  outline: none;
+  border-color: #2d5a27;
+  box-shadow: 0 0 0 0.2rem rgba(45, 90, 39, 0.25);
+}
+
+/* Modal Actions */
+.location-dashboard .modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.location-dashboard .btn-secondary,
+.location-dashboard .btn-submit {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.location-dashboard .btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.location-dashboard .btn-secondary:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.location-dashboard .btn-submit {
+  background: #28a745;
+  color: white;
+}
+
+.location-dashboard .btn-submit:hover:not(:disabled) {
+  background: #218838;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .locations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .btn-secondary,
+  .btn-submit {
+    width: 100%;
+  }
+}

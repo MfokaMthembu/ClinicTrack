@@ -19,6 +19,10 @@ return new class extends Migration
                 'Private', 'Lance Corporal', 'Sergeant',
                 'Major', 'Captain', 'Lieutenant', 'Colonel'
             ]);
+            $table->enum('specialization', [
+                'Surgeon', 'Cardiology', 'Dentist',
+                'General Medicine', 'Orthopedic', 'Optician', 'Gynaecology', 'Pharmacist', 'Ambulance Driver'
+            ])->nullable();
             $table->foreignId('department_id')->constrained()->onDelete('cascade');
             $table->string('phone_number');
             $table->timestamps();

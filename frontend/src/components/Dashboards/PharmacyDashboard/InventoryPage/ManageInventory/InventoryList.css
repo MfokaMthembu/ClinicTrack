@@ -1,0 +1,249 @@
+
+/* Card container */
+.inventory-management .card-table {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+/* Table styling */
+.inventory-management .inventory-table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  color: #2d2d2d;
+}
+
+.inventory-management .inventory-table thead {
+  background: #f5f9f5; /* light green tint */
+  color: #2d5a27;      /* heading green */
+  text-align: left;
+}
+
+.inventory-management .inventory-table th,
+.inventory-table td {
+  padding: 12px 14px;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.inventory-management .inventory-table th:first-child,
+.inventory-table td:first-child {
+  width: 40px;
+  text-align: center;
+}
+
+/* Member cell */
+.inventory-management .member-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inventory-management .member-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.inventory-management .member-info strong {
+  color: #2d2d2d;
+}
+
+.inventory-management .member-info small {
+  color: #666;
+  font-size: 12px;
+}
+
+/* Flags */
+.inventory-management .flag {
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+/* Status badges */
+.inventory-management .status-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.inventory-management .status-badge.active {
+  background-color: #28a745; /* green */
+}
+
+.inventory-management .status-badge.inactive {
+  background-color: #6c757d; /* grey */
+}
+
+/* Button common styles */
+.inventory-management .btn-action,
+.btn-approve,
+.btn-disapprove {
+  border: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  margin-right: 6px;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover effects */
+.inventory-management .btn-action:hover img,
+.btn-approve:hover img,
+.btn-disapprove:hover img {
+  transform: scale(1.1);
+}
+
+/* Approve button green theme */
+.inventory-management .btn-approve {
+  background-color: #28a745; /* green */
+}
+
+/* Disapprove button red theme */
+.inventory-management .btn-disapprove {
+  background-color: #af5c5cc2; /* red */
+}
+
+.inventory-management .btn-approve img {
+  width: 20px;   /* resize icons */
+  height: 20px;
+}
+
+.inventory-management .btn-disapprove img {
+  width: 20px;   /* resize icons */
+  height: 20px;
+}
+
+/* Edit & Delete buttons icons size */
+.inventory-management .btn-action img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Optional hover effect for action buttons */
+.inventory-management .btn-action:hover {
+  background-color: #f1f1f1;
+}
+
+/* Flex row for search + buttons */
+.inventory-management .search-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.inventory-management .search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #2d5a27; 
+  background-color: #f5f9f5; /* light mint background */
+  border-radius: 8px;
+  padding: 6px 10px;
+  width: 240px;
+}
+
+.inventory-management .search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  color: #2d5a27;
+  flex: 1;
+  font-size: 14px;
+}
+
+.inventory-management .search-box .icon {
+  color: #2d5a27; /* green search icon */
+  font-size: 16px;
+}
+
+.inventory-management .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #2b6e3f;; /* button green */
+  color: white; 
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.inventory-management .btn:hover {
+  background: #1e401c; /* darker green */
+}
+
+.inventory-management .btn .icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* keeps icons white */
+}
+
+.inventory-management .search-icon-btn {
+  position: absolute;
+  right: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #2d5a27; /* green */
+  font-size: 16px;
+}
+
+.inventory-management .filter-wrapper,
+.sort-wrapper {
+  position: relative;
+  display: inline-block;
+ 
+}
+
+.inventory-management .dropdown-modal {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 16px;
+  width: 180px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  color: #2d5a27;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.inventory-management .dropdown-modal h4 {
+  font-size: 14px;
+  color: #2d5a27;
+  margin-bottom: 10px;
+}
+
+.inventory-management .dropdown-modal label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.inventory-management .dropdown-modal input[type="radio"] {
+  accent-color: #007bff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -150,6 +150,7 @@ class AuthController extends Controller
             'name'       => 'required|string|max:255',
             'surname'    => 'required|string|max:255',
             'rank'       => 'required|in:Private,Lance Corporal,Sergeant,Major,Captain,Lieutenant,Colonel',
+            'specialization' => 'required|in:Surgeon,Cardiology,Dentist,General Medicine,Orthopedic,Optician,Gynaecology,Pharmacist,Ambulance Driver',
             'department' => 'required|string|max:255', // will need mapping to department_id
             'phone'      => 'required|string|max:20',
             'email'      => 'required|string|email|unique:users,email',
@@ -172,6 +173,7 @@ class AuthController extends Controller
             'name'          => $validated['name'],
             'surname'       => $validated['surname'],
             'rank'          => $validated['rank'],
+            'specialization' => $validated['specialization'],
             'department_id' => $departmentId,
             'phone_number'  => $validated['phone'],
         ]);

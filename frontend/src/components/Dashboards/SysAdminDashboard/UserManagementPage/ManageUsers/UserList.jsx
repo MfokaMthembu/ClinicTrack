@@ -6,7 +6,7 @@ import DeleteIcon from "../../../../../assets/images/icons8-delete-50.png";
 import DisapproveIcon from "../../../../../assets/images/icons8-disable-50.png";
 import Sort from "../../../../../assets/images/icons8-sort-50.png";
 import Filter from "../../../../../assets/images/icons8-filter-50.png";
-import UpdateForm from "./UpdateForm"; 
+import UpdateForm from "./UpdateForm";
 import "./UserList.css";
 
 export default function UserList() {
@@ -17,7 +17,7 @@ export default function UserList() {
   const [filterType, setFilterType] = useState("All");
   const [sortType, setSortType] = useState("Name");
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleFilter = () => setFilterOpen(!filterOpen);
@@ -47,20 +47,21 @@ export default function UserList() {
   }, []);
 
   // Open modal and load user
-  const handleEdit = (user) => {
-    setSelectedUser(user);
+  const handleEdit = (userId) => {
+    setSelectedUserId(userId);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setSelectedUser(null);
+    setSelectedUserId(null);
     setIsModalOpen(false);
   };
 
   // Update user info (after form submission)
   const handleUserUpdate = async (updatedUser) => {
     try {
-      await axiosInstance.put(`/api/users/${updatedUser.id}`, updatedUser);
+      if (!selectedUserId) return;
+      await axiosInstance.put(`/api/users/update-user/${selectedUserId}`, updatedUser);
       alert("User updated successfully");
       setIsModalOpen(false);
       fetchUsers();
@@ -125,6 +126,7 @@ export default function UserList() {
 
   return (
     <div className="user-management">
+      {/* Search and Controls */}
       <div className="search-actions">
         <div className="search-box">
           <input
@@ -138,7 +140,7 @@ export default function UserList() {
           </button>
         </div>
 
-        {/* Filter & Sort */}
+        {/* Filter */}
         <div className="filter-wrapper">
           <button className="btn" onClick={toggleFilter}>
             <img src={Filter} alt="Filter" className="icon" />
@@ -147,7 +149,16 @@ export default function UserList() {
           {filterOpen && (
             <div className="dropdown-modal">
               <h4>Filter By</h4>
-              {["All", "Patient", "Doctor", "Pharmacist", "Ambulance-driver", "Active", "Pending", "Suspended"].map((type) => (
+              {[
+                "All",
+                "Patient",
+                "Doctor",
+                "Pharmacist",
+                "Ambulance-driver",
+                "Active",
+                "Pending",
+                "Suspended",
+              ].map((type) => (
                 <label key={type}>
                   <input
                     type="radio"
@@ -161,6 +172,7 @@ export default function UserList() {
           )}
         </div>
 
+        {/* Sort */}
         <div className="sort-wrapper">
           <button className="btn" onClick={toggleSort}>
             <img src={Sort} alt="Sort" className="icon" />
@@ -210,7 +222,7 @@ export default function UserList() {
                     </span>
                   </td>
                   <td>
-                    <button className="btn-action" onClick={() => handleEdit(user)}>
+                    <button className="btn-action" onClick={() => handleEdit(user.id)}>
                       <img src={EditIcon} alt="Edit" />
                     </button>
                     <button className="btn-action" onClick={() => handleDelete(user.id)}>
@@ -234,17 +246,16 @@ export default function UserList() {
         </table>
       </div>
 
-      {/* Modal for Editing */}
-      <div className="update-modal">
-        {isModalOpen && (
+      {/* Update Modal */}
+      {isModalOpen && (
+        <div className="update-modal">
           <UpdateForm
-            user={selectedUser}
+            userId={selectedUserId}
             onClose={handleCloseModal}
             onUpdate={handleUserUpdate}
           />
-        )}
-      </div>
-
+        </div>
+      )}
     </div>
   );
 }

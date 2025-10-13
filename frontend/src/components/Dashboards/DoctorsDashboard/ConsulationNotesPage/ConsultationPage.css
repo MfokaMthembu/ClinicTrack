@@ -1,0 +1,362 @@
+.prescription-container {
+  width: 100%;
+  background: transparent; /* Remove white background since modal has it */
+  padding: 0; /* Remove padding since modal-body has it */
+  box-shadow: none; /* Remove shadow */
+  border-radius: 0;
+}
+
+.prescription-container h2 {
+  margin-bottom: 1.5rem;
+  color: #2d5a27;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Rest of your prescription form styles... */
+
+.consultation-dashboard .page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2d5a27;
+    margin-bottom: 8px;
+}
+
+.consultation-dashboard .page-subtitle {
+    color: #666;
+    font-size: 16px;
+}
+
+/* Card container */
+.consultation-dashboard .appointments-management .card-table {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+/* Table styling */
+.consultation-dashboard .appointments-management .appointments-table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  color: #2d2d2d;
+}
+
+.consultation-dashboard .appointments-management .appointments-table thead {
+  background: #f5f9f5; /* light green tint */
+  color: #2d5a27;      /* heading green */
+  text-align: left;
+}
+
+.consultation-dashboard .appointments-management .appointments-table th,
+.appointments-table td {
+  padding: 12px 14px;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.consultation-dashboard .appointments-management .appointments-table th:first-child,
+.appointments-table td:first-child {
+  width: 40px;
+  text-align: center;
+}
+
+/* Member cell */
+.consultation-dashboard .appointments-management .member-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.consultation-dashboard .appointments-management .member-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.consultation-dashboard .appointments-management .member-info strong {
+  color: #2d2d2d;
+}
+
+.consultation-dashboard .appointments-management .member-info small {
+  color: #666;
+  font-size: 12px;
+}
+
+/* Flags */
+.consultation-dashboard .appointments-management .flag {
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+/* Status badges */
+.consultation-dashboard .appointments-management .status-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.consultation-dashboard .appointments-management .status-badge.active {
+  background-color: #28a745; /* green */
+}
+
+.consultation-dashboard .appointments-management .status-badge.inactive {
+  background-color: #6c757d; /* grey */
+}
+
+/* Button common styles */
+.consultation-dashboard .appointments-management .btn-action {
+  border: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  margin-right: 6px;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover effects */
+.consultation-dashboard .appointments-management .btn-action:hover img,
+.btn-approve:hover img,
+.btn-disapprove:hover img {
+  transform: scale(1.1);
+}
+
+/* Approve button green theme */
+.consultation-dashboard .appointments-management .btn-approve {
+  background-color: #28a745; /* green */
+}
+
+/* Disapprove button red theme */
+.consultation-dashboard .appointments-management .btn-disapprove {
+  background-color: #af5c5cc2; /* red */
+}
+
+.consultation-dashboard .appointments-management .btn-approve img {
+  width: 20px;   /* resize icons */
+  height: 20px;
+}
+
+.consultation-dashboard .appointments-management .btn-disapprove img {
+  width: 20px;   /* resize icons */
+  height: 20px;
+}
+
+/* Edit & Delete buttons icons size */
+.consultation-dashboard .appointments-management .btn-action img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Optional hover effect for action buttons */
+.consultation-dashboard .appointments-management .btn-action:hover {
+  background-color: #f1f1f1;
+}
+
+/* Flex row for search + buttons */
+.consultation-dashboard .appointments-management .search-actions {
+  margin-top: 20px;  
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.consultation-dashboard .appointments-management .search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #2d5a27; 
+  background-color: #f5f9f5; /* light mint background */
+  border-radius: 8px;
+  padding: 6px 10px;
+  width: 240px;
+}
+
+.consultation-dashboard .appointments-management .search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  color: #2d5a27;
+  flex: 1;
+  font-size: 14px;
+}
+
+.consultation-dashboard .appointments-management .search-box .icon {
+  color: #2d5a27; /* green search icon */
+  font-size: 16px;
+}
+
+.consultation-dashboard .appointments-management .btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #2b6e3f;; /* button green */
+  color: white; 
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.consultation-dashboard .appointments-management .btn:hover {
+  background: #1e401c; /* darker green */
+}
+
+.consultation-dashboard .appointments-management .btn .icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* keeps icons white */
+}
+
+.consultation-dashboard .appointments-management .search-icon-btn {
+  position: absolute;
+  right: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #2d5a27; /* green */
+  font-size: 16px;
+}
+
+/* Modal Styles - Simplified selectors */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Increased z-index */
+  padding: 1rem;
+}
+
+.modal-container {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 10000;
+}
+
+.modal-large {
+  max-width: 1000px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #2d5a27;
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: calc(90vh - 80px);
+  overflow-y: auto;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: #dc3545;
+}
+
+/* Action Button */
+.btn-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: transform 0.2s;
+}
+
+.btn-action:hover {
+  transform: scale(1.1);
+}
+
+.btn-action img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Status Badge Styles */
+.consultation-dashboard .appointments-management .status-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.consultation-dashboard .appointments-management .status-badge.approved {
+  background-color: #155724;
+  color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.consultation-dashboard .appointments-management .status-badge.pending {
+  background-color: #856404;
+  color: #fff3cd;
+  border: 1px solid #ffeaa7;
+}
+
+.consultation-dashboard .appointments-management .status-badge.completed {
+  background-color: #0c5460 ;
+  color: #d1ecf1;
+  border: 1px solid #bee5eb;
+}
+
+.status-badge.rejected,
+.status-badge.cancelled {
+  background-color: #721c24;
+  color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

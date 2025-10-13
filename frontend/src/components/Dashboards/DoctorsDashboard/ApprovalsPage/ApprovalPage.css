@@ -1,0 +1,186 @@
+.approval-dashboard {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.approval-dashboard .page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2d5a27;
+    margin-bottom: 8px;
+}
+
+.approval-dashboard .page-subtitle {
+    color: #666;
+    font-size: 16px;
+}
+
+.approval-dashboard .appointments-grid-container {
+  margin-top: 20px;  
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.approval-dashboard .appointments-grid-container  .appointments-title {
+  color: #006837; /* deep green */
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.approval-dashboard .appointments-grid-container .appointments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 16px;
+}
+
+.approval-dashboard .appointments-grid-container .appointment-card {
+  background: #f9fff9;
+  border-left: 6px solid #006837;
+  border-radius: 10px;
+  padding: 16px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.approval-dashboard .appointments-grid-container .appointment-card:hover {
+  transform: scale(1.02);
+}
+
+.approval-dashboard .appointments-grid-container .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.approval-dashboard .appointments-grid-container .status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+}
+
+.approval-dashboard .appointments-grid-container .status.pending {
+  background-color: #ffb74d; /* amber */
+}
+
+.approval-dashboard .appointments-grid-container .status.approved {
+  background-color: #4caf50; /* green */
+}
+
+.approval-dashboard .appointments-grid-container .status.declined {
+  background-color: #f44336; /* red */
+}
+
+.approval-dashboard .appointments-grid-container .card-body {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.approval-dashboard .appointments-grid-container .specializations {
+  margin-top: 8px;
+}
+
+.approval-dashboard .appointments-grid-container .spec-tag {
+  display: inline-block;
+  background-color: #e0f2f1;
+  color: #006837;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 8px;
+}
+
+.approval-dashboard .appointments-grid-container .card-footer {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.approval-dashboard .appointments-grid-container .pending-btn,
+.approved-btn,
+.declined-btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: white;
+  cursor: default;
+}
+
+.approval-dashboard .appointments-grid-container .pending-btn {
+  background-color: #ffb74d;
+}
+
+.approval-dashboard .appointments-grid-container .approved-btn {
+  background-color: #4caf50;
+}
+
+.approval-dashboard .appointments-grid-container .declined-btn {
+  background-color: #f44336;
+}
+
+.approval-dashboard .btn-approve,
+.btn-disapprove {
+  border: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  margin-right: 6px;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-refferal{
+  border: none;
+  cursor: pointer;
+  margin-right: 6px;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover effects */
+.approval-dashboard .btn-approve:hover img,
+.btn-disapprove:hover img, .btn-refferal:hover img {
+  transform: scale(1.1);
+}
+
+/* Approve button green theme */
+.approval-dashboard .btn-approve {
+  background-color: #ffb74d;
+}
+
+/* Disapprove button red theme */
+.approval-dashboard .btn-disapprove {
+  background-color: #ffb74d;
+}
+
+.approval-dashboard .btn-refferal {
+  background-color: #ffb74d;
+}
+
+.approval-dashboard .btn-approve img {
+  width: 20px;   /* resize icons */
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.approval-dashboard .btn-disapprove img {
+  width: 20px;   /* resize icons */
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.approval-dashboard .btn-refferal img {
+  width: 20px;   /* resize icons */
+  height: 20px;
+ 
+}

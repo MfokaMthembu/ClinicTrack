@@ -1,6 +1,9 @@
+.user-management {
+  margin-bottom: 30px;
+}
 
 /* Card container */
-.card-table {
+.user-management .card-table {
   background: #ffffff;
   border-radius: 12px;
   padding: 16px;
@@ -10,62 +13,62 @@
 }
 
 /* Table styling */
-.user-table {
+.user-management .user-table {
   width: 100%;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
   color: #2d2d2d;
 }
 
-.user-table thead {
+.user-management .user-table thead {
   background: #f5f9f5; /* light green tint */
   color: #2d5a27;      /* heading green */
   text-align: left;
 }
 
-.user-table th,
-.user-table td {
+.user-management .user-table th,
+.user-management .user-table td {
   padding: 12px 14px;
   font-size: 14px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.user-table th:first-child,
-.user-table td:first-child {
+.user-management .user-table th:first-child,
+.user-management .user-table td:first-child {
   width: 40px;
   text-align: center;
 }
 
 /* Member cell */
-.member-info {
+.user-management .member-info {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.member-info img {
+.user-management .member-info img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
 
-.member-info strong {
+.user-management .member-info strong {
   color: #2d2d2d;
 }
 
-.member-info small {
+.user-management .member-info small {
   color: #666;
   font-size: 12px;
 }
 
 /* Flags */
-.flag {
+.user-management .flag {
   margin-right: 6px;
   font-size: 16px;
 }
 
 /* Status badges */
-.status-badge {
+.user-management .status-badge {
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -73,18 +76,18 @@
   color: #fff;
 }
 
-.status-badge.active {
+.user-management .status-badge.active {
   background-color: #28a745; /* green */
 }
 
-.status-badge.inactive {
+.user-management .status-badge.inactive {
   background-color: #6c757d; /* grey */
 }
 
 /* Button common styles */
-.btn-action,
-.btn-approve,
-.btn-disapprove {
+.user-management .btn-action,
+.user-management .btn-approve,
+.user-management .btn-disapprove {
   border: none;
   background-color: #ffffff;
   cursor: pointer;
@@ -98,52 +101,52 @@
 }
 
 /* Hover effects */
-.btn-action:hover img,
-.btn-approve:hover img,
-.btn-disapprove:hover img {
+.user-management .btn-action:hover img,
+.user-management .btn-approve:hover img,
+.user-management .btn-disapprove:hover img {
   transform: scale(1.1);
 }
 
 /* Approve button green theme */
-.btn-approve {
+.user-management .btn-approve {
   background-color: #28a745; /* green */
 }
 
 /* Disapprove button red theme */
-.btn-disapprove {
+.user-management .btn-disapprove {
   background-color: #af5c5cc2; /* red */
 }
 
-.btn-approve img {
+.user-management .btn-approve img {
   width: 20px;   /* resize icons */
   height: 20px;
 }
 
-.btn-disapprove img {
+.user-management .btn-disapprove img {
   width: 20px;   /* resize icons */
   height: 20px;
 }
 
 /* Edit & Delete buttons icons size */
-.btn-action img {
+.user-management .btn-action img {
   width: 20px;
   height: 20px;
 }
 
 /* Optional hover effect for action buttons */
-.btn-action:hover {
+.user-management .btn-action:hover {
   background-color: #f1f1f1;
 }
 
 /* Flex row for search + buttons */
-.search-actions {
+.user-management .search-actions {
   display: flex;
   gap: 12px;
   align-items: center;
   margin: 16px 0;
 }
 
-.search-box {
+.user-management .search-box {
   display: flex;
   align-items: center;
   border: 1px solid #2d5a27; 
@@ -153,7 +156,7 @@
   width: 240px;
 }
 
-.search-box input {
+.user-management .search-box input {
   border: none;
   background: transparent;
   outline: none;
@@ -162,12 +165,12 @@
   font-size: 14px;
 }
 
-.search-box .icon {
+.user-management .search-box .icon {
   color: #2d5a27; /* green search icon */
   font-size: 16px;
 }
 
-.btn {
+.user-management .btn {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -181,18 +184,18 @@
   transition: background 0.3s ease;
 }
 
-.btn:hover {
+.user-management .btn:hover {
   background: #1e401c; /* darker green */
 }
 
-.btn .icon {
+.user-management .btn .icon {
   width: 16px;
   height: 16px;
   object-fit: contain;
   filter: brightness(0) invert(1); /* keeps icons white */
 }
 
-.search-icon-btn {
+.user-management .search-icon-btn {
   position: absolute;
   right: 6px;
   background: transparent;
@@ -202,13 +205,13 @@
   font-size: 16px;
 }
 
-.filter-wrapper,
-.sort-wrapper {
+.user-management .filter-wrapper,
+.user-management .sort-wrapper {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-modal {
+.user-management .dropdown-modal {
   position: absolute;
   top: 45px;
   right: 0;
@@ -223,13 +226,13 @@
   animation: fadeIn 0.2s ease-in-out;
 }
 
-.dropdown-modal h4 {
+.user-management .dropdown-modal h4 {
   font-size: 14px;
   color: #2d5a27;
   margin-bottom: 10px;
 }
 
-.dropdown-modal label {
+.user-management .dropdown-modal label {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -238,7 +241,7 @@
   cursor: pointer;
 }
 
-.dropdown-modal input[type="radio"] {
+.user-management .dropdown-modal input[type="radio"] {
   accent-color: #007bff;
 }
 

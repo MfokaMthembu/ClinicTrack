@@ -10,27 +10,30 @@ class Prescription extends Model
     use HasFactory;
 
     protected $fillable = [
-        'doctor_id',
+        'appointment_id',
+        'doctor_employee_id',
         'patient_id',
-        'pharmacy_id',
-        'medication_name',
-        'quantity',
         'consultation_notes',
         'status',
     ];
 
     public function doctor()
     {
-        return $this->belongsTo(User::class, 'doctor_id');
+        return $this->belongsTo(Employee::class, 'doctor_employee_id');
     }
 
     public function patient()
     {
-        return $this->belongsTo(User::class, 'patient_id');
+        return $this->belongsTo(Patient::class, 'patient_id');
     }
 
-    public function pharmacy()
+    public function appointment()
     {
-        return $this->belongsTo(Pharmacy::class);
+        return $this->belongsTo(Appointment::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(PrescriptionItem::class);
     }
 }

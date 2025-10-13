@@ -1,0 +1,111 @@
+
+
+.appointments-grid-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.appointments-grid-container  .appointments-title {
+  color: #006837; /* deep green */
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.appointments-grid-container .appointments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 16px;
+}
+
+.appointments-grid-container .appointment-card {
+  background: #f9fff9;
+  border-left: 6px solid #006837;
+  border-radius: 10px;
+  padding: 16px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.appointments-grid-container .appointment-card:hover {
+  transform: scale(1.02);
+}
+
+.appointments-grid-container .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.appointments-grid-container .status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+}
+
+.appointments-grid-container .status.pending {
+  background-color: #ffb74d; /* amber */
+}
+
+.appointments-grid-container .status.approved {
+  background-color: #4caf50; /* green */
+}
+
+.appointments-grid-container .status.declined {
+  background-color: #f44336; /* red */
+}
+
+.appointments-grid-container .card-body {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.appointments-grid-container .specializations {
+  margin-top: 8px;
+}
+
+.appointments-grid-container .spec-tag {
+  display: inline-block;
+  background-color: #e0f2f1;
+  color: #006837;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 8px;
+}
+
+.appointments-grid-container .card-footer {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.appointments-grid-container .pending-btn,
+.approved-btn,
+.declined-btn, 
+.completed-btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: white;
+  cursor: default;
+}
+
+.appointments-grid-container .pending-btn {
+  background-color: #ffb74d;
+}
+
+.appointments-grid-container .approved-btn {
+  background-color: #4caf50;
+}
+
+.appointments-grid-container .declined-btn {
+  background-color: #f44336;
+}
+
+.appointments-grid-container .completed-btn {
+  background-color: #47d04b;
+}

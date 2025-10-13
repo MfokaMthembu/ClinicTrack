@@ -1,0 +1,110 @@
+
+.appointment-container {
+  width: 100%;
+  padding: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.appointment-container:hover {
+  box-shadow: 0 6px 18px rgba(0, 128, 0, 0.25);
+}
+
+.appointment-container h4 {
+  color: #0b7a2d;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.appointment-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.appointment-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #333;
+}
+
+.appointment-field span {
+  font-weight: 500;
+  color: #0b7a2d;
+}
+
+/* Date & time inputs */
+.appointment-field input[type="date"],
+.appointment-field input[type="time"],
+.appointment-field textarea[type="text"] {
+  border: 1px solid #0b7a2d;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.appointment-field input[type="date"]:focus,
+.appointment-field input[type="time"]:focus,
+.appointment-field textarea[type="text"]:focus {
+  border-color: #04aa3b;
+  box-shadow: 0 0 4px rgba(11, 122, 45, 0.3);
+}
+
+/* Doctor selection section */
+.doctor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 25px;
+  background-color: #f3fff5;
+  border: 1px solid #b2dfbb;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.doctor-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #444;
+}
+
+.doctor-grid input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: #0b7a2d;
+}
+
+/* Submit button */
+.submit-btn {
+  background-color: #0b7a2d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #04aa3b;
+  transform: translateY(-2px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.error-message {
+    background-color: #fee;
+    color: #c33;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 4px solid #c33;
+}

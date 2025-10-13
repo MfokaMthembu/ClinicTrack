@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Logo from "/logo-ldf.png";
 import Search from "../../../assets/images/icons8-search-48.png";
@@ -8,15 +8,34 @@ import Availability from "../../../assets/images/icons8-schedule-48.png";
 import Approvals from "../../../assets/images/icons8-today-48.png";
 import Notes from "../../../assets/images/icons8-making-notes-48.png";
 import Schedule from "../../../assets/images/icons8-incoming-call-on-iphone-48.png";
+import axiosInstance from "../../../services/axios";
 import "./DoctorLayout.css";
 
 export default function DoctorLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [user, setUser] = useState({ name: "", surname: "", role: "" });
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
+
+    // Fetch user info from API
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get("/api/user/current"); 
+        setUser({
+          name: response.data.name,
+          surname: response.data.surname,
+          role: response.data.role,
+        });
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   // Sidebar items
   const menuItems = [
@@ -67,10 +86,14 @@ export default function DoctorLayout() {
           </button>
 
           <div className="user-profile">
-            <div className="user-avatar">CC</div>
+            <div className="user-avatar">
+              {user.name ? user.name.charAt(0) + user.surname.charAt(0) : "EA"}
+            </div>
             <div className="user-info">
-              <span className="user-name">Celine Chiwando</span>
-              <span className="user-role">Doctor</span>
+              <span className="user-name">
+                {user.name} {user.surname}
+              </span>
+              <span className="user-role">{user.role}</span>
             </div>
           </div>
         </div>

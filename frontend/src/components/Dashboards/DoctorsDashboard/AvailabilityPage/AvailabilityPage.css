@@ -1,0 +1,186 @@
+.availability-header {
+  margin-bottom: 20px;
+}
+
+.loading-banner {
+  padding: 10px;
+  background-color: #e8f5e9;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #0b7a2d;
+  font-weight: 600;
+}
+
+.availability-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.nav-buttons,
+.view-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.control-btn {
+  padding: 8px 16px;
+  border: 1px solid #0b7a2d;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #0b7a2d;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+  background-color: #f0f9f4;
+  transform: translateY(-1px);
+}
+
+.control-btn.active {
+  background-color: #0b7a2d;
+  color: #fff;
+}
+
+.current-month {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0b7a2d;
+  margin: 0;
+}
+
+.calendar-wrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.time-header,
+.date-header {
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #e0e0e0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.date-header.today {
+  background-color: #e8f5e9;
+}
+
+.day-name {
+  font-weight: 600;
+  color: #0b7a2d;
+}
+
+.date-number {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.time-cell {
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-right: 2px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  min-width: 80px;
+}
+
+.time-slot {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  min-height: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #fff;
+  color: #666;
+}
+
+.time-slot:hover {
+  background-color: #f0f9f4;
+  border-color: #0b7a2d;
+}
+
+.time-slot.available {
+  background-color: #0b7a2d;
+  color: #fff;
+  border-color: #0b7a2d;
+}
+
+.time-slot.available:hover {
+  background-color: #094d20;
+}
+
+.instructions-box {
+  padding: 15px;
+  background-color: #e8f5e9;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #2d5a27;
+}
+
+.instructions-box strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.instructions-box ul {
+  margin: 8px 0 0 20px;
+  padding: 0;
+}
+
+.instructions-box li {
+  margin-bottom: 4px;
+}
+
+@media (max-width: 768px) {
+  .calendar-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-buttons,
+  .view-buttons {
+    justify-content: center;
+  }
+
+  .current-month {
+    text-align: center;
+  }
+
+  .availability-card {
+    padding: 16px;
+  }
+
+  .control-btn {
+    flex: 1;
+  }
+}

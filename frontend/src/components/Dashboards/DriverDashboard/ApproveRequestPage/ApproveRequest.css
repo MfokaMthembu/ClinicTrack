@@ -1,0 +1,666 @@
+.request-dashboard {
+  padding: 2rem;
+}
+
+.request-dashboard .page-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2d5a27;
+  margin-bottom: 0.5rem;
+}
+
+.request-dashboard .page-subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* Alerts */
+.request-dashboard .alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.request-dashboard .alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.request-dashboard .alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Active Request Section */
+.request-dashboard .active-request-section {
+  margin-bottom: 3rem;
+}
+
+.request-dashboard .active-request-section h2 {
+  font-size: 1.5rem;
+  color: #dc3545;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.request-dashboard .active-request-card {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+  border: 2px solid #dc3545;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+}
+
+.request-dashboard .request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #dc3545;
+}
+
+.request-dashboard .request-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: #212529;
+}
+
+.request-dashboard .priority-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+.request-dashboard .priority-badge.emergency {
+  background-color: #dc3545;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.request-dashboard .priority-badge.non_emergency {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.request-dashboard .status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.request-dashboard .status-badge.assigned {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.request-dashboard .status-badge.enroute {
+  background-color: #007bff;
+  color: white;
+}
+
+.request-dashboard .status-badge.arrived {
+  background-color: #28a745;
+  color: white;
+}
+
+.request-dashboard .status-badge.transporting {
+  background-color: #6f42c1;
+  color: white;
+}
+
+.request-dashboard .status-badge.delivered {
+  background-color: #20c997;
+  color: white;
+}
+
+.request-dashboard .request-details {
+  margin-bottom: 1.5rem;
+}
+
+.request-dashboard .request-details p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.request-dashboard .request-details strong {
+  color: #212529;
+  font-weight: 600;
+}
+
+/* Status Actions */
+.request-dashboard .status-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.request-dashboard .btn-status {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid #007bff;
+  background-color: white;
+  color: #007bff;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.request-dashboard .btn-status:hover:not(:disabled) {
+  background-color: #007bff;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.request-dashboard .btn-status:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.request-dashboard .btn-complete {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.request-dashboard .btn-complete:hover:not(:disabled) {
+  background-color: #28a745;
+  color: white;
+}
+
+.request-dashboard .btn-view-map {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.request-dashboard .btn-view-map:hover {
+  background-color: #5a6268;
+}
+
+/* Pending Requests Section */
+.request-dashboard .pending-requests-section {
+  margin-top: 3rem;
+}
+
+.request-dashboard .pending-requests-section h2 {
+  font-size: 1.5rem;
+  color: #2d5a27;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.request-dashboard .loading-text {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.request-dashboard .no-requests {
+  text-align: center;
+  padding: 3rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #6c757d;
+}
+
+.request-dashboard .requests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Request Card */
+.request-dashboard .request-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 4px solid #2d5a27;
+}
+
+.request-dashboard .request-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.request-dashboard .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.request-dashboard .card-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #2d5a27;
+  font-weight: 600;
+}
+
+.request-dashboard .request-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.request-dashboard .card-body {
+  padding: 1.5rem;
+}
+
+.request-dashboard .patient-info {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #e8f5e9;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.request-dashboard .patient-info strong {
+  color: #2d5a27;
+}
+
+.request-dashboard .location-info {
+  margin-bottom: 1rem;
+}
+
+.request-dashboard .location-info p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #495057;
+}
+
+.request-dashboard .location-info strong {
+  color: #212529;
+}
+
+.request-dashboard .reason-box,
+.request-dashboard .notes-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-left: 3px solid #007bff;
+  border-radius: 4px;
+}
+
+.request-dashboard .reason-box strong,
+.request-dashboard .notes-box strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #007bff;
+  font-size: 0.9rem;
+}
+
+.request-dashboard .reason-box p,
+.request-dashboard .notes-box p {
+  margin: 0;
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.request-dashboard .card-footer {
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.request-dashboard .btn-approve,
+.request-dashboard .btn-reject,
+.request-dashboard .btn-view {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.request-dashboard .btn-approve {
+  background-color: #28a745;
+  color: white;
+}
+
+.request-dashboard .btn-approve:hover {
+  background-color: #218838;
+}
+
+.request-dashboard .btn-reject {
+  background-color: #dc3545;
+  color: white;
+}
+
+.request-dashboard .btn-reject:hover {
+  background-color: #c82333;
+}
+
+.request-dashboard .btn-view {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.request-dashboard .btn-view:hover {
+  background-color: #138496;
+}
+
+/* Modal Styles */
+.request-dashboard .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.request-dashboard .modal-container {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.request-dashboard .modal-large {
+  max-width: 900px;
+}
+
+.request-dashboard .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 2px solid #2d5a27;
+  background: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.request-dashboard .modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #2d5a27;
+  font-weight: 600;
+}
+
+.request-dashboard .close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 0;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.request-dashboard .close-btn:hover {
+  color: #dc3545;
+}
+
+.request-dashboard .modal-body {
+  padding: 2rem;
+}
+
+/* Form Fields */
+.request-dashboard .form-field {
+  margin-bottom: 1.5rem;
+}
+
+.request-dashboard .form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.request-dashboard .required {
+  color: #dc3545;
+}
+
+.request-dashboard .form-field input,
+.request-dashboard .form-field select,
+.request-dashboard .form-field textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.request-dashboard .form-field input:focus,
+.request-dashboard .form-field select:focus,
+.request-dashboard .form-field textarea:focus {
+  outline: none;
+  border-color: #2d5a27;
+  box-shadow: 0 0 0 0.2rem rgba(45, 90, 39, 0.25);
+}
+
+.request-dashboard .form-field textarea {
+  resize: vertical;
+}
+
+/* Request Summary */
+.request-dashboard .request-summary {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #2d5a27;
+  margin-bottom: 1.5rem;
+}
+
+.request-dashboard .request-summary h4 {
+  margin: 0 0 1rem 0;
+  color: #2d5a27;
+  font-size: 1.1rem;
+}
+
+.request-dashboard .request-summary p {
+  margin: 0.5rem 0;
+  color: #495057;
+}
+
+.request-dashboard .request-summary strong {
+  color: #212529;
+}
+
+/* Modal Actions */
+.request-dashboard .modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.request-dashboard .btn-secondary,
+.request-dashboard .btn-submit {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.request-dashboard .btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.request-dashboard .btn-secondary:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.request-dashboard .btn-submit {
+  background: #28a745;
+  color: white;
+}
+
+.request-dashboard .btn-submit:hover:not(:disabled) {
+  background: #218838;
+}
+
+.request-dashboard .btn-danger {
+  background: #dc3545;
+}
+
+.request-dashboard .btn-danger:hover:not(:disabled) {
+  background: #c82333;
+}
+
+.request-dashboard .btn-secondary:disabled,
+.request-dashboard .btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Map Legend */
+.request-dashboard .map-legend {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.request-dashboard .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.request-dashboard .legend-icon {
+  font-size: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .requests-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+
+  .status-actions {
+    flex-direction: column;
+  }
+
+  .btn-status {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .request-dashboard {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .requests-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-footer {
+    flex-direction: column;
+  }
+
+  .btn-approve,
+  .btn-reject,
+  .btn-view {
+    width: 100%;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .btn-secondary,
+  .btn-submit {
+    width: 100%;
+  }
+
+  .request-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .map-legend {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .active-request-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .priority-badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .status-badge {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+  }
+}

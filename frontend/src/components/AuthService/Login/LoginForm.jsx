@@ -8,12 +8,14 @@ export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
       // Step 1: Get CSRF token from Laravel Sanctum
@@ -25,10 +27,11 @@ export default function LoginForm() {
         password,
       });
 
-      const { token, dashboard } = response.data;
+      const { token, dashboard, user } = response.data;
 
-      // Step 3: Save token in localStorage
-      localStorage.setItem('authToken', token);
+      // Step 3: Save token in localStorage (changed from 'authToken' to 'token')
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
 
       // Step 4: Set Authorization header for future requests
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -38,7 +41,9 @@ export default function LoginForm() {
 
     } catch (err) {
       console.error('Login error:', err.response?.data || err.message);
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,10 +84,13 @@ export default function LoginForm() {
 
           {error && <p className="auth-error">{error}</p>}
 
-          <button type="submit" className="auth-button">Login</button>
-            <div className='forgot-password'>
-              <a href='#'> Forgot Password? </a>
-            </div>
+          <button type="submit" className="auth-button" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+          
+          <div className='forgot-password'>
+            <a href='/forgot-password'> Forgot Password? </a>
+          </div>
         </form>
       </div>
     </div>

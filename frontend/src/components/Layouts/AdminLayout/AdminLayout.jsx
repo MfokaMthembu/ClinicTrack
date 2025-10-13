@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Logo from "/logo-ldf.png";
 import Search from "../../../assets/images/icons8-search-48.png";
@@ -7,15 +7,34 @@ import dashboard from "../../../assets/images/icons8-home-48.png";
 import userManagement from "../../../assets/images/icons8-management-50.png";
 import reports from "../../../assets/images/icons8-reporting-48.png";
 import auditLogs from "../../../assets/images/icons8-audit-48.png";
+import axiosInstance from "../../../services/axios";
 import "./AdminLayout.css";
 
 export default function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [user, setUser] = useState({ name: "", surname: "", role: "" });
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
+
+    // Fetch user info from API
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const response = await axiosInstance.get("/api/user/current"); 
+          setUser({
+            name: response.data.name,
+            surname: response.data.surname,
+            role: response.data.role,
+          });
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      };
+
+      fetchUser();
+    }, []);
 
   // Sidebar items
   const menuItems = [
@@ -67,8 +86,8 @@ export default function AdminLayout() {
           <div className="user-profile">
             <div className="user-avatar">SA</div>
             <div className="user-info">
-              <span className="user-name">SysAdmin</span>
-              <span className="user-role">Administrator</span>
+              <span className="user-name">System Admin</span>
+              <span className="user-role">{user.role}</span>
             </div>
           </div>
         </div>

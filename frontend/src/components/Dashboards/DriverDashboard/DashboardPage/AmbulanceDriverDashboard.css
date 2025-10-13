@@ -1,0 +1,10 @@
+.ambulance-dashboard .content-header {
+    margin-bottom: 30px;
+}
+
+.ambulance-dashboard .page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2d5a27;
+    margin-bottom: 8px;
+}

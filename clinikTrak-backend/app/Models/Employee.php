@@ -15,40 +15,28 @@ class Employee extends Model
         'name',
         'surname',
         'rank',
+        'specialization',
         'department_id',
         'phone_number',
     ];
 
-    /**
-     * An employee belongs to a department.
-     */
     public function department()
     {
         return $this->belongsTo(Department::class);
     }
 
-    /**
-     * An employee has one linked user account.
-     */
     public function user()
     {
         return $this->hasOne(User::class, 'employee_id');
     }
 
-    /**
-     * A user can only be linked to one patient profile.
-     */
-    public function patient()
+    public function appointments()
     {
-        return $this->belongsTo(Patient::class, 'patient_id');
+        return $this->hasMany(Appointment::class, 'doctor_employee_id');
     }
 
-    /**
-     * A user can only be linked to one employee profile.
-     */
-    public function employee()
+    public function availability()
     {
-        return $this->belongsTo(Employee::class, 'employee_id');
+        return $this->hasMany(DoctorAvailability::class, 'employee_id');
     }
-
 }

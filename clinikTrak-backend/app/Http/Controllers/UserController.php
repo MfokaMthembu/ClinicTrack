@@ -7,14 +7,10 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-
-
-
-
     /**
     * method to get all users
     */
@@ -53,53 +49,68 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Get the currently logged-in user
+     */
+    public function getCurrentUser()
+    {
+        $user = auth()->user()->load(['patient', 'employee', 'roles']);
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->patient ? $user->patient->name : ($user->employee ? $user->employee->name : null),
+            'surname' => $user->patient ? $user->patient->surname : ($user->employee ? $user->employee->surname : null),
+            'email' => $user->email,
+            'role' => $user->roles->pluck('name')->first() ?? 'patient',
+            'status' => $user->status,
+        ]);
+    }
 
 
     /**
-    * method to edit a user
-    */
-    public function updateUser(Request $request, $id)
-    {
-        $user = User::with(['patient', 'doctor', 'pharmacist', 'ambulance-driver'])->findOrFail($id);
+     * Get user details for editing
+     */
+public function showDetails($id)
+{
+    $user = User::with(['patient', 'employee'])->findOrFail($id);
 
-        // Update user account (email, status)
-        $user->update([
-            'email' => $request->email,
-            'status' => $request->status,
+    return response()->json([
+        'id' => $user->id,
+        'name' => $user->employee->name ?? $user->patient->name ?? '',
+        'surname' => $user->employee->surname ?? $user->patient->surname ?? '',
+        'email' => $user->email,
+        'status' => $user->status,
+        'role' => $user->roles->first()->name ?? '',
+    ]);
+}
+
+// Update user info
+public function updateUser(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+    $user->update([
+        'email' => $request->email,
+        'status' => $request->status,
+    ]);
+
+    if ($user->employee) {
+        $user->employee->update([
+            'name' => $request->name,
+            'surname' => $request->surname,
         ]);
-
-        // Handle role assignment (only admin)
-        if ($request->has('role')) {
-            $user->syncRoles([$request->role]);
-        }
-
-        // If patient account
-        if ($user->patient_id) {
-            $user->patient->update([
-                'name'    => $request->name,
-                'surname' => $request->surname,
-                'dob'     => $request->dob,
-                'gender'  => $request->gender,
-                'address' => $request->address,
-            ]);
-        }
-
-        // If staff account
-        if ($user->employee_id) {
-            $user->employee->update([
-                'name'          => $request->name,
-                'surname'       => $request->surname,
-                'rank'          => $request->rank,
-                'department_id' => $request->department_id,
-                'phone_number'  => $request->phone_number,
-            ]);
-        }
-
-        return response()->json([
-            'message' => 'User updated successfully',
-            'user'    => $user->load('patient', 'employee', 'roles')
+    } elseif ($user->patient) {
+        $user->patient->update([
+            'name' => $request->name,
+            'surname' => $request->surname,
         ]);
     }
+
+    if ($request->has('role')) {
+        $user->syncRoles([$request->role]);
+    }
+
+    return response()->json(['message' => 'User updated successfully']);
+}
 
 
     /**

@@ -8,6 +8,7 @@ export default function StaffRegistrationForm () {
       name: "",
       surname: "",
       rank: "",
+      specialization: "",
       department: "",
       phone: "",
       email: "",
@@ -84,9 +85,25 @@ export default function StaffRegistrationForm () {
                         <option value="Lance Corporal">Lance Corporal</option>
                         <option value="Sergeant">Sergeant</option>
                         <option value="Major">Major</option>
-                        <option value="Capitan">Capitan</option>
+                        <option value="Captain">Captain</option>
                         <option value="Lieutenant">Lieutenant</option>
                         <option value="Colonel"> Colonel </option>        
+                    </select>
+                </label>
+
+                <label className="staff-field">
+                    <span className="staff-text"> Specialization </span>
+                    <select name="specialization" required onChange={handleChange}>
+                        <option value="" >Select your Specialization</option>
+                        <option value="Surgeon">Surgeon</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Dentist">Dentist</option>
+                        <option value="General Medicine">General Medicine</option>
+                        <option value="Orthopedic">Orthopedic</option>
+                        <option value="Optician">Optician</option>
+                        <option value="Gynaecology"> Gynaecology </option>  
+                        <option value="Pharmacist"> Pharmacist </option>  
+                        <option value="Ambulance Driver"> Ambulance Driver </option>        
                     </select>
                 </label>
 

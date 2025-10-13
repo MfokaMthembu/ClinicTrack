@@ -20,7 +20,17 @@ import ApprovalPage from './components/Dashboards/DoctorsDashboard/ApprovalsPage
 import AvailabilityPage from './components/Dashboards/DoctorsDashboard/AvailabilityPage/AvailabilityPage';
 import ConsultationNotesPage from './components/Dashboards/DoctorsDashboard/ConsulationNotesPage/ConsultationPage';
 import OnCallSchedulePage from './components/Dashboards/DoctorsDashboard/OnCallSchedulePage/OnCallSchedulePage';
-import EditForm from './components/Dashboards/SysAdminDashboard/UserManagementPage/ManageUsers/UpdateForm';
+import PharmacyLayout from './components/Layouts/PharmacyLayout/PharmacyLayout';
+import PharmacyDashboard from './components/Dashboards/PharmacyDashboard/DashboardPage/PharmacyDashboard';
+import InventoryPage from './components/Dashboards/PharmacyDashboard/InventoryPage/InventoryPage';
+import DispensaryPage from './components/Dashboards/PharmacyDashboard/DispensaryPage/DispensaryPage';
+import StockAlertsPage from './components/Dashboards/PharmacyDashboard/StockAlertsPage/StockAlerts';
+import ReportingPage from './components/Dashboards/PharmacyDashboard/ReportingPage/ReportingPage';
+import DriverLayout from './components/Layouts/DriverLayout/DriverLayout';
+import DriverDashboard from './components/Dashboards/DriverDashboard/DashboardPage/AmbulanceDriverDashboard';
+import DriverRequests from './components/Dashboards/DriverDashboard/ApproveRequestPage/ApproveRequest';
+import DriverLocation from './components/Dashboards/DriverDashboard/LocationPage/LocationPage';
+import ForgotPassword from './components/AuthService/ForgotPassword/ForgotPasswordForm';
 
 import App from './App';
 
@@ -30,23 +40,25 @@ function AppRoutes() {
       <Routes>
          {/* index route */}
         <Route path="/" element={<App />} />
-        <Route path="/editForm" element={ <EditForm />} />
+        
         {/* Auth routes */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<Register />} />
         <Route path="/patient-register" element={<RegisterForm />} />
         <Route path="/staff-register" element={<StaffRegistrationForm />} />
+        
         {/* Reset Password route */}
-
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        
         {/* Admin Dashboard routes */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboardPage />} />
           <Route path="manage-users" element={<UserManagementPage />} />
           <Route path="reports" element={<ReportsPage />} />
-          <Route path="audit-logs" element={<AuditLogsPage />} />     
+          <Route path="audit-logs" element={<AuditLogsPage />} />    
         </Route>
      
-        {/* Patient Dashboard route */}
+        {/* Patient Dashboard routes */}
         <Route path="/patient" element={<PatientLayout />}>
             <Route index element={<PatientDashboardPage />} />
             <Route path="appointments" element={<AppointmentsPage />} />
@@ -55,7 +67,7 @@ function AppRoutes() {
             <Route path="notifications" element={<NotificationsPage />} />
           </Route>
 
-        {/* Doctor Dashboard route */}
+        {/* Doctor Dashboard routes */}
         <Route path="/doctor" element={<DoctorLayout />}>
             <Route index element={<DoctorDashboardPage />} />
             <Route path="availability" element={<AvailabilityPage />} />
@@ -63,7 +75,23 @@ function AppRoutes() {
             <Route path="consultation-notes" element={<ConsultationNotesPage />} />
             <Route path="on-call-schedule" element={<OnCallSchedulePage />} />
           </Route>
-        
+
+          {/* Pharmacy Dashboard routes */}
+          <Route path="/pharmacist" element={<PharmacyLayout />}>
+              <Route index element={<PharmacyDashboard />} />
+              <Route path="inventory" element={<InventoryPage />} />
+              <Route path="dispensary" element={<DispensaryPage />} />
+              <Route path="lowstock" element={<StockAlertsPage />} />
+              <Route path="reporting" element={<ReportingPage />} />
+            </Route>
+
+          {/* Pharmacy Dashboard routes */}
+          <Route path="/ambulance" element={<DriverLayout />}>
+              <Route index element={<DriverDashboard />} />
+              <Route path="requests" element={<DriverRequests />} />
+              <Route path="share-location" element={<DriverLocation />} />
+          </Route>
+          
       </Routes>
     </Router>
   );

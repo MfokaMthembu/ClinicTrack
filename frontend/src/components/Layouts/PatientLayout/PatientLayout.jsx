@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import axiosInstance from "../../../services/axios"; 
 import Logo from "/logo-ldf.png";
 import Search from "../../../assets/images/icons8-search-48.png";
 import Notify from "../../../assets/images/icons8-notification-48.png";
@@ -10,13 +11,33 @@ import Prescriptions from "../../../assets/images/icons8-pharmacy-100.png";
 import Notifications from "../../../assets/images/icons8-notification-48.png";
 import "./PatientLayout.css";
 
+
 export default function PatientLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const [user, setUser] = useState({ name: "", surname: "", role: "" });
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
+
+  // Fetch user info from API
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get("/api/user/current"); 
+        setUser({
+          name: response.data.name,
+          surname: response.data.surname,
+          role: response.data.role,
+        });
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
 
   // Sidebar items
   const menuItems = [
@@ -67,10 +88,12 @@ export default function PatientLayout() {
           </button>
 
           <div className="user-profile">
-            <div className="user-avatar">EA</div>
+            <div className="user-avatar">
+              {user.name ? user.name.charAt(0) + user.surname.charAt(0) : "EA"}
+            </div>
             <div className="user-info">
-              <span className="user-name">Edwell Adolf</span>
-              <span className="user-role">Patient</span>
+              <span className="user-name">{user.name} {user.surname}</span>
+              <span className="user-role">{user.role}</span>
             </div>
           </div>
         </div>

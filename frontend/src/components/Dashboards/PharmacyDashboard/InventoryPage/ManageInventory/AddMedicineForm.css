@@ -1,0 +1,91 @@
+.medicine-container {
+  width: 100%;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+/* Center heading */
+.medicine-container h4 {
+  color: #0b7a2d;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+}
+
+/* Form structure */
+.medicine-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.medicine-container .medicine-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.medicine-container .medicine-field span {
+  font-weight: 600;
+  color: #0b7a2d;
+  font-size: 15px;
+}
+
+/* Input, select, textarea */
+.medicine-container .medicine-field input,
+.medicine-field select,
+.medicine-field textarea {
+  border: 1px solid #b2dfbb;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.medicine-container .medicine-field input:focus,
+.medicine-field select:focus,
+.medicine-field textarea:focus {
+  border-color: #0b7a2d;
+  box-shadow: 0 0 3px rgba(11, 122, 45, 0.2);
+}
+
+/* Submit button */
+.medicine-container .submit-btn {
+  height: 30%;
+  background-color: #0b7a2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.medicine-container .submit-btn:hover {
+  background-color: #049136;
+}
+
+.medicine-container  .cancel-btn {
+  height: 30%;
+  background-color: #6c757d;
+  color: white;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 30px;
+}
+
+.medicine-container  .cancel-btn:hover {
+  background-color: #5a6268;
+}

@@ -14,16 +14,23 @@ import './App.css'
 
 function App() {
   const navigate = useNavigate();
-  // About Us slideshow index state
   const [aboutIndex, setAboutIndex] = useState(0);
 
-  // Slideshow state and handlers
   const images = [HealthUnit, PatientCare, DoctorConsult];
+  
   const aboutPrev = () => {
     setAboutIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
+  
   const aboutNext = () => {
     setAboutIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -37,21 +44,21 @@ function App() {
           </div>
 
           <div className="navbar-links">
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Services</a>
-            <a href="#">Contact Us</a>
+            <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>Home</a>
+            <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About Us</a>
+            <a href="#services" onClick={(e) => { e.preventDefault(); scrollToSection('services'); }}>Services</a>
+            <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact Us</a>
           </div>
 
           <div className="navbar-buttons">
             <button className="btn btn-outline" onClick={() => navigate("/login")}>Login</button>
-            <button className="btn btn-primary"  onClick={() => navigate("/register")}>Sign Up</button>
+            <button className="btn btn-primary" onClick={() => navigate("/register")}>Sign Up</button>
           </div>
         </nav>
       </header>
 
       {/* Hero Section */}
-      <section className="hero">
+      <section id="home" className="hero">
         <div className='hero-cont'>
           <h2>Clinic Tracking App</h2>
           <div>
@@ -65,12 +72,12 @@ function App() {
         <div className='hero-cards'>
           <div className='cards-wrapper'>
             <div className='h-card'>
-              <h3> Our Values </h3>
-              <p>Compassion, Excellence, Integrity, Respect, Teamwork. </p>
+              <h3>Our Values</h3>
+              <p>Compassion, Excellence, Integrity, Respect, Teamwork.</p>
             </div>  
 
             <div className='h-card'>
-              <h3> Our Mission </h3>
+              <h3>Our Mission</h3>
               <p> 
                 To provide efficient, affordable, high quality medical care,
                 in a compassionate and rehabilitative health care services to its clientele.
@@ -78,7 +85,7 @@ function App() {
             </div>
 
             <div className='h-card'>
-              <h3> Our Vision </h3>
+              <h3>Our Vision</h3>
               <p> 
                 To be a leading military hospital recognized for exceptional patient care, innovation, and community engagement. 
               </p>
@@ -88,35 +95,35 @@ function App() {
       </section>
         
       {/* About Us */}
-      <section className="about">
+      <section id="about" className="about">
         <h3>About Us</h3>
         <p>Makoanyane Military Hospital (MMH) was established in 1988 with the purpose of serving the Army personnel and their families. Before then there was an Army clinic which was established as early as in 1980.
           Its purpose was to minimize the influx of the uniformed personnel queuing at the Queen Elizabeth Ⅱ Hospital (QE Ⅱ) and other local clinics, such as Loretto and the Maseru City Council (MCC) clinic in Maseru urban. 
           This initiative worked phenomenally well with the existing clinics though it was small in terms of accommodating Military personnel and their families.
-        </p> <br/>
+        </p>
 
         {/* About Us Image slides */}
-          <div className="about-image">
-            <div className="slides" style={{ transform: `translateX(-${aboutIndex * 100}%)` }}>
-              {images.map((img, index) => (
-                <div className="slide" key={index}>
-                  <img src={img} alt={`About Us Image ${index + 1}`} />
-                </div>
-              ))}
-            </div>
-
-            {/* Arrows */}
-            <button className="arrow left" onClick={aboutPrev}>
-              &#10094;
-            </button>
-            <button className="arrow right" onClick={aboutNext}>
-              &#10095;
-            </button>
+        <div className="about-image">
+          <div className="slides" style={{ transform: `translateX(-${aboutIndex * 100}%)` }}>
+            {images.map((img, index) => (
+              <div className="slide" key={index}>
+                <img src={img} alt={`About Us Image ${index + 1}`} />
+              </div>
+            ))}
           </div>
+
+          {/* Arrows */}
+          <button className="arrow left" onClick={aboutPrev}>
+            &#10094;
+          </button>
+          <button className="arrow right" onClick={aboutNext}>
+            &#10095;
+          </button>
+        </div>
       </section>
 
       {/* Services */}
-      <section className="services">
+      <section id="services" className="services">
         <h4>Services</h4>
         <div className="service-cards">
           <div className="card">
@@ -137,7 +144,7 @@ function App() {
           <div className="card">
             <img src={Radiology} alt="X-ray scans" />
             <h5>Radiology Services</h5>
-            <p> For all your x-ray scans </p>
+            <p>For all your x-ray scans</p>
           </div>
           <div className="card">
             <img src={Pharmacy} alt="Pharmacy" />
@@ -146,14 +153,14 @@ function App() {
           </div>
           <div className="card">
             <img src={Maternity} alt="Maternity Care" />
-            <h5> Maternity Services</h5>
+            <h5>Maternity Services</h5>
             <p>Comprehensive prenatal, delivery, and postnatal care.</p>          
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="footer">
+      <footer id="contact" className="footer">
         <p>&copy; 2025 KaShaba Technologies. All rights reserved.</p>
       </footer>
     </div>
