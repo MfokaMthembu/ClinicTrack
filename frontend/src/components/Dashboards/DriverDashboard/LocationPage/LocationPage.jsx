@@ -205,7 +205,7 @@ export default function LocationPage() {
               </span>
             </div>
 
-            <div className="card-body">
+            <div className="card-body"> 
               <div className="location-info">
                 <strong>Vehicle Model:</strong>
                 <span>{ambulance.vehicle_model || 'N/A'}</span>
@@ -217,7 +217,7 @@ export default function LocationPage() {
               </div>
 
               {ambulance.current_latitude && ambulance.current_longitude && (
-                <>
+                <div>
                   <div className="location-info">
                     <strong>Current Location:</strong>
                     <span>
@@ -234,7 +234,7 @@ export default function LocationPage() {
                         : 'Never'}
                     </span>
                   </div>
-                </>
+                </div>
               )}
             </div>
 

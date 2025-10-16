@@ -18,34 +18,27 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      // Step 1: Get CSRF token from Laravel Sanctum
-      await axiosInstance.get('/sanctum/csrf-cookie');
-
-      // Step 2: Send login request
+      // Remove CSRF step - just login directly with token auth
       const response = await axiosInstance.post('/api/login', {
         email,
         password,
       });
 
       const { token, dashboard, user } = response.data;
-
-      // Step 3: Save token in localStorage (changed from 'authToken' to 'token')
+      
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-
-      // Step 4: Set Authorization header for future requests
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      // Step 5: Redirect to role-based dashboard
+      
+      // Token will be added automatically by interceptor
       navigate(dashboard);
 
     } catch (err) {
       console.error('Login error:', err.response?.data || err.message);
-      setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+      setError(err.response?.data?.message || 'Login failed.');
     } finally {
       setLoading(false);
     }
-  };
+};
 
   return (
     <div className="auth-wrap">

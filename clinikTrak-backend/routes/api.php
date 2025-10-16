@@ -8,13 +8,19 @@ use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DoctorAvailabilityController;
 use App\Http\Controllers\AmbulanceController;
+use App\Http\Controllers\ForgotPasswordController;
 use Spatie\Permission\Middleware\RoleMiddleware;
+
 
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/register-patient', [AuthController::class, 'registerPatient']);
 Route::post('/register-staff', [AuthController::class, 'registerStaff']);
+Route::post('/verify-email', [ForgotPasswordController::class, 'verifyEmail']);
+Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
+
 
 // Protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
