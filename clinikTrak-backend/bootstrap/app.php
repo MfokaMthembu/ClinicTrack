@@ -11,13 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Enable full CORS support
+        // Enable Laravel's global CORS middleware FIRST
         $middleware->use([
             \Illuminate\Http\Middleware\HandleCors::class,
-    ]);
+        ]);
 
-        // Keep stateful API sessions (for Sanctum if needed)
+        // Keep API + stateful session handling (for Sanctum or API tokens)
         $middleware->statefulApi();
-    })->withExceptions(function (Exceptions $exceptions): void {
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->create();
