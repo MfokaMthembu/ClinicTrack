@@ -4,7 +4,7 @@ const axiosInstance = axios.create({
     baseURL: import.meta.env.MODE === 'production' 
         ? 'https://clinictrack-backend-production.up.railway.app'
         : 'http://127.0.0.1:8000',
-    withCredentials: true,  
+    withCredentials: false,  // Changed to false for token-based auth
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
