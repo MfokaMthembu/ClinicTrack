@@ -27,7 +27,7 @@ export default function AdminDashboardPage() {
 
           <div className="card stat-card">
             <div className="stat-value"> </div>
-            <div className="stat-label">Available Beds</div>
+            <div className="stat-label"> Medicine dispensed </div>
           </div>
         </div>
 
@@ -45,9 +45,9 @@ export default function AdminDashboardPage() {
               Quick Actions
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <button className="btn btn-green">Add New Patient</button>
-              <button className="btn btn-red">Emergency Alert</button>
-              <button className="btn btn-lightgreen">Schedule Appointment</button>
+              <button className="btn-quick-action btn-green"> Generate Reports </button>
+              <button className="btn-quick-action btn-red"> View System Logs</button>
+              <button className="btn-quick-action btn-lightgreen">Schedule Appointment</button>
             </div>
           </div>
         </div>
