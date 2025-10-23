@@ -1,0 +1,65 @@
+name: Laravel Tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'clinikTrak-backend/**'  # Only run when backend changes
+      - '.github/workflows/laravel-tests.yml'
+
+jobs:
+  test:
+    name: Run Laravel Tests
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./clinikTrak-backend  # Important: set working directory
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: testing
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-interaction
+
+      - name: Generate Key
+        run: php artisan key:generate
+
+      - name: Setup Test Database
+        run: |
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=testing" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=password" >> .env
+
+      - name: Run Migrations
+        run: php artisan migrate --force
+
+      - name: Run Tests
+        run: php artisan test
+
+      - name: Tests Passed
+        if: success()
+        run: echo "Laravel tests passed!"
