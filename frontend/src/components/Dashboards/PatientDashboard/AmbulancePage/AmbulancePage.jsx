@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import L from 'leaflet';
 import axiosInstance from '../../../../services/axios';
 import 'leaflet/dist/leaflet.css';
-import LocationIcon from '../../../../assets/images/icons8-location-96.png';
+import echo from '../../../../services/echo';
 import './AmbulancePage.css';
 
 // Fix for default marker icons in React-Leaflet
@@ -42,6 +42,7 @@ export default function AmbulancePage() {
   const [ambulances, setAmbulances] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   const [formData, setFormData] = useState({
     pickup_address: '',
     destination_address: '',
@@ -58,26 +59,40 @@ export default function AmbulancePage() {
   useEffect(() => {
     fetchAvailableAmbulances();
     getCurrentLocation();
-  }, []);
 
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          setPosition({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude
-          });
-        },
-        (err) => {
-          console.error('Error getting location:', err);
-          setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
-        }
-      );
-    } else {
-      setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
-    }
-  };
+      // Subscribe to real-time ambulance location updates
+      const channel = echo.channel('ambulances');    
+      channel.listen('.location.updated', (event) => {
+        console.log('Ambulance location updated:', event);
+        
+        // Update the ambulance in the state
+        setAmbulances(prev => {
+          const index = prev.findIndex(a => a.id === event.ambulance_id);
+          
+          if (index !== -1) {
+            // Update existing ambulance
+            const updated = [...prev];
+            updated[index] = {
+              ...updated[index],
+              current_latitude: event.latitude,
+              current_longitude: event.longitude,
+              location_updated_at: event.location_updated_at,
+              status: event.status,
+            };
+            return updated;
+          } else {
+            // Ambulance not in list, fetch fresh data
+            fetchAvailableAmbulances();
+            return prev;
+          }
+        });
+      });
+
+      // Cleanup on unmount
+      return () => {
+        echo.leaveChannel('ambulances');
+      };
+    }, []);
 
   const fetchAvailableAmbulances = async () => {
     try {
@@ -148,22 +163,20 @@ export default function AmbulancePage() {
     <div className="ambulance-dashboard">
       <h1 className="page-title">Request Ambulance</h1>
       <p className="page-subtitle">
-        Click on the map to set your pickup location or use your current location
+        Live Tracking - Click on the map to set your pickup location
       </p>
 
       {error && !showModal && <div className="alert alert-error">{error}</div>}
 
-      {/* Request Ambulance button */}
       <div className='ambulance-btn'>
         <button onClick={handleRequestAmbulance} className="btn-request-ambulance">
           Request Ambulance
         </button>
         <button onClick={getCurrentLocation} className="btn-get-location">
-           Current Location
+          Current Location
         </button>
       </div>
 
-      {/* Leaflet js map */}
       <div className='map-container'>
         {position && (
           <MapContainer 
@@ -178,7 +191,7 @@ export default function AmbulancePage() {
             
             <LocationMarker position={position} setPosition={setPosition} />
             
-            {/* Show available ambulances */}
+            {/* Show available ambulances with REAL-TIME updates */}
             {ambulances.map((ambulance) => (
               <Marker
                 key={ambulance.id}
@@ -189,7 +202,13 @@ export default function AmbulancePage() {
                   <strong>{ambulance.registration_number}</strong><br />
                   {ambulance.vehicle_model}<br />
                   Driver: {ambulance.driver_name}<br />
-                  Status: {ambulance.status}
+                  Status: <span style={{ 
+                    color: ambulance.status === 'available' ? 'green' : 'orange',
+                    fontWeight: 'bold'
+                  }}>
+                    {ambulance.status}
+                  </span><br />
+                  <small>Updated: {new Date(ambulance.location_updated_at).toLocaleTimeString()}</small>
                 </Popup>
               </Marker>
             ))}
@@ -202,6 +221,7 @@ export default function AmbulancePage() {
           <p><strong>Selected Location:</strong></p>
           <p>Latitude: {position.lat.toFixed(6)}</p>
           <p>Longitude: {position.lng.toFixed(6)}</p>
+          <p className="live-indicator">Live tracking {ambulances.length} ambulances</p>
         </div>
       )}
 

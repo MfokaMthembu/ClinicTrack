@@ -6,6 +6,7 @@ use App\Models\Ambulance;
 use App\Models\AmbulanceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Events\AmbulanceLocationUpdated;
 
 class AmbulanceController extends Controller
 {
@@ -300,6 +301,9 @@ class AmbulanceController extends Controller
                     'current_longitude' => $validated['current_longitude'],
                     'location_updated_at' => now()
                 ]);
+
+                // Broadcast location update
+                broadcast(new AmbulanceLocationUpdated($ambulanceRequest->ambulance->fresh(['driver'])))->toOthers();
             }
 
             // If completed, set ambulance back to available
@@ -472,8 +476,8 @@ class AmbulanceController extends Controller
     }
 
     /**
-     * Driver: Update ambulance location
-     */
+    * Driver: Update ambulance location (with real-time broadcasting)
+    */
     public function updateLocation(Request $request)
     {
         $driver = auth()->user()->employee;
@@ -498,6 +502,9 @@ class AmbulanceController extends Controller
             'current_longitude' => $validated['longitude'],
             'location_updated_at' => now()
         ]);
+
+        // Broadcast the location update in real-time
+        broadcast(new AmbulanceLocationUpdated($ambulance->fresh(['driver'])))->toOthers();
 
         return response()->json([
             'message' => 'Location updated successfully',

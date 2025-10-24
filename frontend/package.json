@@ -15,6 +15,7 @@
     "@fullcalendar/react": "^6.1.19",
     "@fullcalendar/timegrid": "^6.1.19",
     "axios": "^1.12.2",
+    "laravel-echo": "^2.2.4",
     "leaflet": "^1.9.4",
     "pusher-js": "^8.4.0",
     "react": "^19.1.1",
