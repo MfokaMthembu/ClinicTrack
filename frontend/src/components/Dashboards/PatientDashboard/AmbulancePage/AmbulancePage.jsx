@@ -64,7 +64,7 @@ export default function AmbulancePage() {
     const channel = echo.channel('ambulances');
     
     channel.listen('.location.updated', (event) => {
-      console.log('🚑 Ambulance location updated:', event);
+      console.log('Ambulance location updated:', event);
       
       setAmbulances(prev => {
         const index = prev.findIndex(a => a.id === event.ambulance_id);
@@ -99,7 +99,7 @@ export default function AmbulancePage() {
       console.error('Geolocation not supported');
       setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
       setLocationLoading(false);
-      setError('⚠️ Your browser does not support geolocation. Using default location (Maseru).');
+      setError('Your browser does not support geolocation. Using default location (Maseru).');
       return;
     }
 
@@ -129,7 +129,7 @@ export default function AmbulancePage() {
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        console.log('✅ Got location:', pos.coords);
+        console.log('Got location:', pos.coords);
         setPosition({
           lat: pos.coords.latitude,
           lng: pos.coords.longitude
@@ -137,7 +137,7 @@ export default function AmbulancePage() {
         setLocationLoading(false);
       },
       (err) => {
-        console.error('❌ Geolocation error:', err);
+        console.error('Geolocation error:', err);
         
         // Fallback to default location
         setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
@@ -147,16 +147,16 @@ export default function AmbulancePage() {
         let errorMessage = '';
         switch(err.code) {
           case err.PERMISSION_DENIED:
-            errorMessage = '📍 Location permission denied. Click on the map to set your pickup location manually.';
+            errorMessage = 'Location permission denied. Click on the map to set your pickup location manually.';
             break;
           case err.POSITION_UNAVAILABLE:
-            errorMessage = '⚠️ Location unavailable. Using default location (Maseru). Click on the map to adjust.';
+            errorMessage = 'Location unavailable. Using default location (Maseru). Click on the map to adjust.';
             break;
           case err.TIMEOUT:
-            errorMessage = '⏱️ Location request timed out. Using default location. Click "Current Location" to retry.';
+            errorMessage = 'Location request timed out. Using default location. Click "Current Location" to retry.';
             break;
           default:
-            errorMessage = '⚠️ Unable to get your location. Using default location (Maseru).';
+            errorMessage = 'Unable to get your location. Using default location (Maseru).';
         }
         setError(errorMessage);
       },
@@ -172,7 +172,7 @@ export default function AmbulancePage() {
     try {
       const response = await axiosInstance.get('/api/ambulances/available');
       setAmbulances(response.data.ambulances);
-      console.log('📋 Loaded', response.data.ambulances.length, 'ambulances');
+      console.log('Loaded', response.data.ambulances.length, 'ambulances');
     } catch (error) {
       console.error('Error fetching ambulances:', error);
     }
@@ -188,7 +188,7 @@ export default function AmbulancePage() {
 
   const handleRequestAmbulance = () => {
     if (!position) {
-      setError('⚠️ Please set your pickup location on the map first');
+      setError('Please set your pickup location on the map first');
       return;
     }
     setShowModal(true);
@@ -214,7 +214,7 @@ export default function AmbulancePage() {
       };
 
       await axiosInstance.post('/api/ambulance-requests', requestData);
-      setSuccess('✅ Ambulance request submitted successfully! A driver will respond shortly.');
+      setSuccess('Ambulance request submitted successfully! A driver will respond shortly.');
       
       setTimeout(() => {
         setShowModal(false);
@@ -228,7 +228,7 @@ export default function AmbulancePage() {
       }, 2000);
     } catch (error) {
       console.error('Error submitting request:', error);
-      setError(error.response?.data?.message || '❌ Failed to submit request. Please try again.');
+      setError(error.response?.data?.message || 'Failed to submit request. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -236,11 +236,11 @@ export default function AmbulancePage() {
 
   return (
     <div className="ambulance-dashboard">
-      <h1 className="page-title">🚑 Request Ambulance</h1>
+      <h1 className="page-title">Request Ambulance</h1>
       <p className="page-subtitle">
         {ambulances.length > 0 && (
           <span className="live-indicator">
-            🔴 Live Tracking {ambulances.length} {ambulances.length === 1 ? 'ambulance' : 'ambulances'}
+            Live Tracking {ambulances.length} {ambulances.length === 1 ? 'ambulance' : 'ambulances'}
           </span>
         )}
       </p>
@@ -262,7 +262,7 @@ export default function AmbulancePage() {
                 fontSize: '14px'
               }}
             >
-              🔄 Try Again
+              Try Again
             </button>
           ) : null}
         </div>
@@ -275,14 +275,14 @@ export default function AmbulancePage() {
           className="btn-request-ambulance"
           disabled={!position || locationLoading}
         >
-          🚨 Request Ambulance
+          Request Ambulance
         </button>
         <button 
           onClick={getCurrentLocation} 
           className="btn-get-location"
           disabled={locationLoading}
         >
-          {locationLoading ? '⏳ Getting Location...' : '📍 Use Current Location'}
+          {locationLoading ? 'Getting Location...' : 'Use Current Location'}
         </button>
       </div>
 
@@ -360,7 +360,7 @@ export default function AmbulancePage() {
             backgroundColor: '#f5f5f5',
             borderRadius: '8px'
           }}>
-            <p style={{ color: '#666' }}>⚠️ Unable to load map. Please refresh the page.</p>
+            <p style={{ color: '#666' }}> Unable to load map. Please refresh the page.</p>
           </div>
         )}
       </div>
@@ -368,12 +368,12 @@ export default function AmbulancePage() {
       {/* Coordinates Display */}
       {position && (
         <div className="coordinates-display">
-          <p><strong>📍 Selected Pickup Location:</strong></p>
+          <p><strong>Selected Pickup Location:</strong></p>
           <p>Latitude: {position.lat.toFixed(6)}</p>
           <p>Longitude: {position.lng.toFixed(6)}</p>
           {ambulances.length > 0 && (
             <p className="live-indicator">
-              🔴 Tracking {ambulances.length} live {ambulances.length === 1 ? 'ambulance' : 'ambulances'}
+              Tracking {ambulances.length} live {ambulances.length === 1 ? 'ambulance' : 'ambulances'}
             </p>
           )}
         </div>
@@ -466,7 +466,7 @@ export default function AmbulancePage() {
                     className="btn-submit"
                     disabled={loading}
                   >
-                    {loading ? '⏳ Submitting...' : '✅ Submit Request'}
+                    {loading ? 'Submitting...' : ' Submit Request'}
                   </button>
                 </div>
               </form>

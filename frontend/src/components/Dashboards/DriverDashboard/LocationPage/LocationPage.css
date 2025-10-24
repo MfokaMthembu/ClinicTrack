@@ -299,7 +299,8 @@
 }
 
 .location-dashboard .btn-secondary,
-.location-dashboard .btn-submit {
+.location-dashboard .btn-submit,
+.location-dashboard .btn-tracking{
   flex: 1;
   padding: 0.75rem 1rem;
   border-radius: 6px;

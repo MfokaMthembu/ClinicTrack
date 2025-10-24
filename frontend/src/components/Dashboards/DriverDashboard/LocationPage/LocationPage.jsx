@@ -93,7 +93,7 @@ export default function LocationPage() {
     if (!('geolocation' in navigator)) {
       console.error('Geolocation not supported');
       setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
-      setError('⚠️ Your device does not support GPS tracking.');
+      setError('Your device does not support GPS tracking.');
       return;
     }
 
@@ -104,7 +104,7 @@ export default function LocationPage() {
           getCurrentLocation();
         } else {
           setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
-          setError('📍 Location permission denied. Please enable GPS in your device settings.');
+          setError('Location permission denied. Please enable GPS in your device settings.');
         }
       })
       .catch((err) => {
@@ -119,11 +119,11 @@ export default function LocationPage() {
         latitude: pos.lat,
         longitude: pos.lng
       });
-      console.log('✅ Location sent:', pos.lat.toFixed(6), pos.lng.toFixed(6));
+      console.log('Location sent:', pos.lat.toFixed(6), pos.lng.toFixed(6));
     } catch (error) {
-      console.error('❌ Error sending location:', error);
+      console.error('Error sending location:', error);
       if (isTracking) {
-        setError('⚠️ Failed to send location update. Check your internet connection.');
+        setError('Failed to send location update. Check your internet connection.');
       }
     }
   };
@@ -131,7 +131,7 @@ export default function LocationPage() {
   const getCurrentLocation = (silent = false) => {
     if (!navigator.geolocation) {
       if (!silent) {
-        setError('⚠️ Geolocation not supported on this device');
+        setError('Geolocation not supported on this device');
       }
       return;
     }
@@ -143,14 +143,14 @@ export default function LocationPage() {
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        console.log('✅ GPS location:', pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
+        console.log('GPS location:', pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
         setPosition({
           lat: pos.coords.latitude,
           lng: pos.coords.longitude
         });
         if (!silent) {
           setLocationLoading(false);
-          setSuccess('✅ Location updated!');
+          setSuccess('Location updated!');
           setTimeout(() => setSuccess(''), 2000);
         }
       },
@@ -167,16 +167,16 @@ export default function LocationPage() {
           let errorMessage = '';
           switch(err.code) {
             case err.PERMISSION_DENIED:
-              errorMessage = '📍 GPS permission denied. Please enable location access in your device settings.';
+              errorMessage = 'GPS permission denied. Please enable location access in your device settings.';
               break;
             case err.POSITION_UNAVAILABLE:
-              errorMessage = '⚠️ GPS signal unavailable. Make sure you\'re outdoors or near a window.';
+              errorMessage = 'GPS signal unavailable. Make sure you\'re outdoors or near a window.';
               break;
             case err.TIMEOUT:
-              errorMessage = '⏱️ GPS timeout. Please try again.';
+              errorMessage = 'GPS timeout. Please try again.';
               break;
             default:
-              errorMessage = '⚠️ Unable to get GPS location.';
+              errorMessage = 'Unable to get GPS location.';
           }
           setError(errorMessage);
         }
@@ -191,23 +191,23 @@ export default function LocationPage() {
 
   const toggleTracking = () => {
     if (!ambulance) {
-      setError('⚠️ Register an ambulance first');
+      setError('Register an ambulance first');
       return;
     }
 
     if (ambulance.status === 'offline') {
-      setError('⚠️ Please go online first before enabling live tracking');
+      setError('Please go online first before enabling live tracking');
       return;
     }
 
     if (!position) {
-      setError('⚠️ Waiting for GPS location...');
+      setError('Waiting for GPS location...');
       getCurrentLocation();
       return;
     }
 
     setIsTracking(!isTracking);
-    setSuccess(isTracking ? '⏸️ Live tracking stopped' : '▶️ Live tracking started');
+    setSuccess(isTracking ? 'Live tracking stopped' : 'Live tracking started');
     
     setTimeout(() => setSuccess(''), 3000);
   };
@@ -247,7 +247,7 @@ export default function LocationPage() {
 
     try {
       await axiosInstance.post('/api/driver/ambulance/register', formData);
-      setSuccess('✅ Ambulance registered successfully!');
+      setSuccess('Ambulance registered successfully!');
       
       setTimeout(() => {
         setShowRegisterModal(false);
@@ -268,7 +268,7 @@ export default function LocationPage() {
 
   const handleUpdateLocation = async () => {
     if (!position) {
-      setError('⚠️ Please select a location on the map');
+      setError('Please select a location on the map');
       return;
     }
 
@@ -281,7 +281,7 @@ export default function LocationPage() {
         latitude: position.lat,
         longitude: position.lng
       });
-      setSuccess('✅ Location updated successfully!');
+      setSuccess('Location updated successfully!');
       
       setTimeout(() => {
         setShowUpdateLocationModal(false);
@@ -289,7 +289,7 @@ export default function LocationPage() {
       }, 2000);
     } catch (error) {
       console.error('Error updating location:', error);
-      setError(error.response?.data?.message || '❌ Failed to update location');
+      setError(error.response?.data?.message || 'Failed to update location');
     } finally {
       setLoading(false);
     }
@@ -301,13 +301,13 @@ export default function LocationPage() {
     
     try {
       const response = await axiosInstance.post('/api/driver/ambulance/toggle-status');
-      setSuccess('✅ ' + response.data.message);
+      setSuccess(' ' + response.data.message);
       
       setTimeout(() => setSuccess(''), 3000);
       fetchAmbulance();
     } catch (error) {
       console.error('Error toggling status:', error);
-      setError(error.response?.data?.message || '❌ Failed to toggle status');
+      setError(error.response?.data?.message || 'Failed to toggle status');
     }
   };
 
@@ -325,7 +325,7 @@ export default function LocationPage() {
     <div className="location-dashboard">
       <h1 className="page-title">🚑 Manage My Ambulance</h1>
       <p className="page-subtitle">
-        {isTracking && <span className="live-indicator">🔴 Live Tracking Active - Sending location every 10 seconds</span>}
+        {isTracking && <span className="live-indicator"> Live Tracking Active - Sending location every 10 seconds</span>}
       </p>
 
       {error && (
@@ -346,7 +346,7 @@ export default function LocationPage() {
                 fontSize: '14px'
               }}
             >
-              🔄 Retry
+              Retry
             </button>
           )}
         </div>
@@ -370,13 +370,13 @@ export default function LocationPage() {
       ) : !ambulance ? (
         <div className="no-ambulance">
           <div className="no-ambulance-content">
-            <h2>🚑 No Ambulance Registered</h2>
+            <h2>No Ambulance Registered</h2>
             <p>You need to register an ambulance to start accepting requests</p>
             <button 
               className="btn-register"
               onClick={() => setShowRegisterModal(true)}
             >
-              ➕ Register Ambulance
+              Register Ambulance
             </button>
           </div>
         </div>
@@ -384,7 +384,7 @@ export default function LocationPage() {
         <div className="locations-grid">
           <div className="location-card">
             <div className="card-header">
-              <h2>🚑 {ambulance.registration_number}</h2>
+              <h2>{ambulance.registration_number}</h2>
               <span 
                 className="status-badge"
                 style={{ backgroundColor: getStatusColor(ambulance.status) }}
@@ -438,7 +438,7 @@ export default function LocationPage() {
                     width: '100%'
                   }}
                 >
-                  {isTracking ? '🔴 Stop Live Tracking' : '▶️ Start Live Tracking'}
+                  {isTracking ? 'Stop Live Tracking' : 'Start Live Tracking'}
                 </button>
               )}
 
@@ -446,7 +446,7 @@ export default function LocationPage() {
                 className="btn-update-location"
                 onClick={() => setShowUpdateLocationModal(true)}
               >
-                📍 Update Location Manually
+                Update Location Manually
               </button>
 
               {ambulance.status !== 'on_duty' && (
@@ -457,7 +457,7 @@ export default function LocationPage() {
                     backgroundColor: ambulance.status === 'available' ? '#6c757d' : '#28a745'
                   }}
                 >
-                  {ambulance.status === 'available' ? '🌙 Go Offline' : '✅ Go Online'}
+                  {ambulance.status === 'available' ? ' Go Offline' : ' Go Online'}
                 </button>
               )}
             </div>
@@ -467,7 +467,7 @@ export default function LocationPage() {
           {position ? (
             <div className="location-map">
               <h3>
-                📍 Current Location 
+                Current Location 
                 {isTracking && <span style={{ color: '#dc3545' }}> 🔴</span>}
               </h3>
               <MapContainer 
@@ -483,7 +483,7 @@ export default function LocationPage() {
                   <Popup>
                     <strong>Your Ambulance</strong><br />
                     {ambulance.registration_number}<br />
-                    {isTracking && <span style={{ color: '#dc3545' }}><strong>🔴 Live Tracking</strong></span>}
+                    {isTracking && <span style={{ color: '#dc3545' }}><strong> Live Tracking</strong></span>}
                   </Popup>
                 </Marker>
               </MapContainer>
@@ -495,7 +495,7 @@ export default function LocationPage() {
                   fontWeight: 'bold',
                   textAlign: 'center'
                 }}>
-                  ✅ Sending location updates every 10 seconds
+                  Sending location updates every 10 seconds
                 </p>
               )}
             </div>
@@ -525,7 +525,7 @@ export default function LocationPage() {
                     </>
                   ) : (
                     <>
-                      <p style={{ color: '#666', marginBottom: '16px' }}>⚠️ No GPS location available</p>
+                      <p style={{ color: '#666', marginBottom: '16px' }}> No GPS location available</p>
                       <button 
                         onClick={() => getCurrentLocation()}
                         style={{
@@ -538,7 +538,7 @@ export default function LocationPage() {
                           fontSize: '16px'
                         }}
                       >
-                        📍 Get Current Location
+                        Get Current Location
                       </button>
                     </>
                   )}
@@ -554,7 +554,7 @@ export default function LocationPage() {
         <div className="modal-overlay" onClick={() => setShowRegisterModal(false)}>
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>🚑 Register Ambulance</h2>
+              <h2>Register Ambulance</h2>
               <button className="close-btn" onClick={() => setShowRegisterModal(false)}>
                 &times;
               </button>
@@ -616,7 +616,7 @@ export default function LocationPage() {
                     className="btn-submit"
                     disabled={loading}
                   >
-                    {loading ? '⏳ Registering...' : '✅ Register Ambulance'}
+                    {loading ? 'Registering...' : ' Register Ambulance'}
                   </button>
                 </div>
               </form>
@@ -630,7 +630,7 @@ export default function LocationPage() {
         <div className="modal-overlay" onClick={() => setShowUpdateLocationModal(false)}>
           <div className="modal-container modal-large" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>📍 Update Ambulance Location</h2>
+              <h2>Update Ambulance Location</h2>
               <button className="close-btn" onClick={() => setShowUpdateLocationModal(false)}>
                 &times;
               </button>
@@ -646,7 +646,7 @@ export default function LocationPage() {
                 borderRadius: '6px',
                 marginBottom: '16px'
               }}>
-                💡 Click on the map to set your location, or use the button below to get your device's GPS location
+                Click on the map to set your location, or use the button below to get your device's GPS location
               </p>
 
               <button 
@@ -665,7 +665,7 @@ export default function LocationPage() {
                   marginBottom: '16px'
                 }}
               >
-                {locationLoading ? '⏳ Getting GPS Location...' : '📍 Use Current GPS Location'}
+                {locationLoading ? 'Getting GPS Location...' : 'Use Current GPS Location'}
               </button>
 
               {position ? (
@@ -690,14 +690,14 @@ export default function LocationPage() {
                   borderRadius: '8px'
                 }}>
                   <p style={{ color: '#666' }}>
-                    {locationLoading ? '⏳ Getting location...' : '📍 Click "Use Current GPS Location" to set your position'}
+                    {locationLoading ? 'Getting location...' : 'Click "Use Current GPS Location" to set your position'}
                   </p>
                 </div>
               )}
 
               {position && (
                 <div className="coordinates-display" style={{ marginTop: '16px' }}>
-                  <p><strong>📍 Selected Location:</strong></p>
+                  <p><strong>Selected Location:</strong></p>
                   <p>Latitude: {position.lat.toFixed(6)}</p>
                   <p>Longitude: {position.lng.toFixed(6)}</p>
                 </div>
@@ -718,7 +718,7 @@ export default function LocationPage() {
                   onClick={handleUpdateLocation}
                   disabled={loading || !position}
                 >
-                  {loading ? '⏳ Updating...' : '✅ Update Location'}
+                  {loading ? 'Updating...' : 'Update Location'}
                 </button>
               </div>
             </div>
