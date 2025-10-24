@@ -31,10 +31,11 @@ function LocationMarker({ position, setPosition }) {
 export default function LocationPage() {
   const [ambulance, setAmbulance] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showUpdateLocationModal, setShowUpdateLocationModal] = useState(false);
   const [position, setPosition] = useState(null);
-  const [isTracking, setIsTracking] = useState(false); // state for auto tracking
+  const [isTracking, setIsTracking] = useState(false);
   const [formData, setFormData] = useState({
     registration_number: '',
     vehicle_model: '',
@@ -48,7 +49,7 @@ export default function LocationPage() {
 
   useEffect(() => {
     fetchAmbulance();
-    getCurrentLocation();
+    initializeLocation();
 
     // Cleanup tracking on unmount
     return () => {
@@ -66,7 +67,7 @@ export default function LocationPage() {
 
       // Then send every 10 seconds
       trackingIntervalRef.current = setInterval(() => {
-        getCurrentLocation(); // Get fresh GPS position
+        getCurrentLocation(true); // Silent update
       }, 10000); // 10 seconds
 
       return () => {
@@ -83,10 +84,34 @@ export default function LocationPage() {
 
   // Send location update whenever position changes during tracking
   useEffect(() => {
-    if (isTracking && position) {
+    if (isTracking && position && ambulance) {
       sendLocationUpdate(position);
     }
-  }, [position, isTracking]);
+  }, [position]);
+
+  const initializeLocation = () => {
+    if (!('geolocation' in navigator)) {
+      console.error('Geolocation not supported');
+      setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
+      setError('⚠️ Your device does not support GPS tracking.');
+      return;
+    }
+
+    // Check permission
+    navigator.permissions.query({ name: 'geolocation' })
+      .then((result) => {
+        if (result.state === 'granted' || result.state === 'prompt') {
+          getCurrentLocation();
+        } else {
+          setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
+          setError('📍 Location permission denied. Please enable GPS in your device settings.');
+        }
+      })
+      .catch((err) => {
+        console.error('Permission check error:', err);
+        getCurrentLocation();
+      });
+  };
 
   const sendLocationUpdate = async (pos) => {
     try {
@@ -94,49 +119,95 @@ export default function LocationPage() {
         latitude: pos.lat,
         longitude: pos.lng
       });
-      console.log('Location sent:', pos);
+      console.log('✅ Location sent:', pos.lat.toFixed(6), pos.lng.toFixed(6));
     } catch (error) {
-      console.error('Error sending location:', error);
+      console.error('❌ Error sending location:', error);
+      if (isTracking) {
+        setError('⚠️ Failed to send location update. Check your internet connection.');
+      }
     }
   };
 
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          setPosition({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude
-          });
-        },
-        (err) => {
-          console.error('Error getting location:', err);
-          setError('Failed to get GPS location');
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0
-        }
-      );
-    } else {
-      setError('Geolocation not supported');
+  const getCurrentLocation = (silent = false) => {
+    if (!navigator.geolocation) {
+      if (!silent) {
+        setError('⚠️ Geolocation not supported on this device');
+      }
+      return;
     }
+
+    if (!silent) {
+      setLocationLoading(true);
+      setError('');
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        console.log('✅ GPS location:', pos.coords.latitude.toFixed(6), pos.coords.longitude.toFixed(6));
+        setPosition({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        });
+        if (!silent) {
+          setLocationLoading(false);
+          setSuccess('✅ Location updated!');
+          setTimeout(() => setSuccess(''), 2000);
+        }
+      },
+      (err) => {
+        console.error('❌ GPS error:', err);
+        if (!silent) {
+          setLocationLoading(false);
+          
+          // Fallback to default if no position yet
+          if (!position) {
+            setPosition({ lat: defaultCenter[0], lng: defaultCenter[1] });
+          }
+          
+          let errorMessage = '';
+          switch(err.code) {
+            case err.PERMISSION_DENIED:
+              errorMessage = '📍 GPS permission denied. Please enable location access in your device settings.';
+              break;
+            case err.POSITION_UNAVAILABLE:
+              errorMessage = '⚠️ GPS signal unavailable. Make sure you\'re outdoors or near a window.';
+              break;
+            case err.TIMEOUT:
+              errorMessage = '⏱️ GPS timeout. Please try again.';
+              break;
+            default:
+              errorMessage = '⚠️ Unable to get GPS location.';
+          }
+          setError(errorMessage);
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: silent ? 5000 : 15000,
+        maximumAge: 0
+      }
+    );
   };
 
   const toggleTracking = () => {
     if (!ambulance) {
-      setError('Register an ambulance first');
+      setError('⚠️ Register an ambulance first');
       return;
     }
 
     if (ambulance.status === 'offline') {
-      setError('Please go online first');
+      setError('⚠️ Please go online first before enabling live tracking');
+      return;
+    }
+
+    if (!position) {
+      setError('⚠️ Waiting for GPS location...');
+      getCurrentLocation();
       return;
     }
 
     setIsTracking(!isTracking);
-    setSuccess(isTracking ? 'Location tracking stopped' : 'Location tracking started');
+    setSuccess(isTracking ? '⏸️ Live tracking stopped' : '▶️ Live tracking started');
     
     setTimeout(() => setSuccess(''), 3000);
   };
@@ -176,7 +247,7 @@ export default function LocationPage() {
 
     try {
       await axiosInstance.post('/api/driver/ambulance/register', formData);
-      setSuccess('Ambulance registered successfully!');
+      setSuccess('✅ Ambulance registered successfully!');
       
       setTimeout(() => {
         setShowRegisterModal(false);
@@ -189,7 +260,7 @@ export default function LocationPage() {
       }, 2000);
     } catch (error) {
       console.error('Error registering ambulance:', error);
-      setError(error.response?.data?.message || 'Failed to register ambulance');
+      setError(error.response?.data?.message || '❌ Failed to register ambulance');
     } finally {
       setLoading(false);
     }
@@ -197,7 +268,7 @@ export default function LocationPage() {
 
   const handleUpdateLocation = async () => {
     if (!position) {
-      setError('Please select a location on the map');
+      setError('⚠️ Please select a location on the map');
       return;
     }
 
@@ -210,7 +281,7 @@ export default function LocationPage() {
         latitude: position.lat,
         longitude: position.lng
       });
-      setSuccess('Location updated successfully!');
+      setSuccess('✅ Location updated successfully!');
       
       setTimeout(() => {
         setShowUpdateLocationModal(false);
@@ -218,20 +289,25 @@ export default function LocationPage() {
       }, 2000);
     } catch (error) {
       console.error('Error updating location:', error);
-      setError(error.response?.data?.message || 'Failed to update location');
+      setError(error.response?.data?.message || '❌ Failed to update location');
     } finally {
       setLoading(false);
     }
   };
 
   const handleToggleStatus = async () => {
+    setError('');
+    setSuccess('');
+    
     try {
       const response = await axiosInstance.post('/api/driver/ambulance/toggle-status');
-      setSuccess(response.data.message);
+      setSuccess('✅ ' + response.data.message);
+      
+      setTimeout(() => setSuccess(''), 3000);
       fetchAmbulance();
     } catch (error) {
       console.error('Error toggling status:', error);
-      setError(error.response?.data?.message || 'Failed to toggle status');
+      setError(error.response?.data?.message || '❌ Failed to toggle status');
     }
   };
 
@@ -247,26 +323,60 @@ export default function LocationPage() {
 
   return (
     <div className="location-dashboard">
-      <h1 className="page-title">Manage My Ambulance</h1>
+      <h1 className="page-title">🚑 Manage My Ambulance</h1>
       <p className="page-subtitle">
-        {isTracking && 'Live Tracking Active - Sending location every 10 seconds'}
+        {isTracking && <span className="live-indicator">🔴 Live Tracking Active - Sending location every 10 seconds</span>}
       </p>
 
-      {error && <div className="alert alert-error">{error}</div>}
+      {error && (
+        <div className="alert alert-error">
+          {error}
+          {(error.includes('GPS') || error.includes('timeout')) && (
+            <button 
+              onClick={() => getCurrentLocation()} 
+              className="btn-retry"
+              style={{ 
+                marginLeft: '10px', 
+                padding: '6px 12px',
+                backgroundColor: '#dc3545',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              🔄 Retry
+            </button>
+          )}
+        </div>
+      )}
+      
       {success && <div className="alert alert-success">{success}</div>}
 
       {loading && !ambulance ? (
-        <p className="loading-text">Loading...</p>
+        <div className="loading-text" style={{ textAlign: 'center', padding: '40px' }}>
+          <div className="spinner" style={{
+            border: '4px solid #f3f3f3',
+            borderTop: '4px solid #3498db',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 16px'
+          }}></div>
+          <p>Loading ambulance data...</p>
+        </div>
       ) : !ambulance ? (
         <div className="no-ambulance">
           <div className="no-ambulance-content">
-            <h2>No Ambulance Registered</h2>
+            <h2>🚑 No Ambulance Registered</h2>
             <p>You need to register an ambulance to start accepting requests</p>
             <button 
               className="btn-register"
               onClick={() => setShowRegisterModal(true)}
             >
-              Register Ambulance
+              ➕ Register Ambulance
             </button>
           </div>
         </div>
@@ -274,7 +384,7 @@ export default function LocationPage() {
         <div className="locations-grid">
           <div className="location-card">
             <div className="card-header">
-              <h2> {ambulance.registration_number}</h2>
+              <h2>🚑 {ambulance.registration_number}</h2>
               <span 
                 className="status-badge"
                 style={{ backgroundColor: getStatusColor(ambulance.status) }}
@@ -284,7 +394,35 @@ export default function LocationPage() {
             </div>
 
             <div className="card-body"> 
-              {/* ... keep existing info ... */}
+              <div className="location-info">
+                <strong>Vehicle Model:</strong>
+                <span>{ambulance.vehicle_model || 'N/A'}</span>
+              </div>
+
+              <div className="location-info">
+                <strong>Vehicle Type:</strong>
+                <span className="vehicle-type">{ambulance.vehicle_type.toUpperCase()}</span>
+              </div>
+
+              {ambulance.current_latitude && ambulance.current_longitude && (
+                <>
+                  <div className="location-info">
+                    <strong>Current Location:</strong>
+                    <span>
+                      {Number(ambulance.current_latitude).toFixed(4)}, {Number(ambulance.current_longitude).toFixed(4)}
+                    </span>
+                  </div>
+
+                  <div className="location-info">
+                    <strong>Last Updated:</strong>
+                    <span>
+                      {ambulance.location_updated_at 
+                        ? new Date(ambulance.location_updated_at).toLocaleString()
+                        : 'Never'}
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="card-actions">
@@ -295,10 +433,12 @@ export default function LocationPage() {
                   onClick={toggleTracking}
                   style={{ 
                     backgroundColor: isTracking ? '#dc3545' : '#28a745',
-                    marginBottom: '10px'
+                    color: 'white',
+                    marginBottom: '10px',
+                    width: '100%'
                   }}
                 >
-                  {isTracking ? 'Stop Live Tracking' : 'Start Live Tracking'}
+                  {isTracking ? '🔴 Stop Live Tracking' : '▶️ Start Live Tracking'}
                 </button>
               )}
 
@@ -306,7 +446,7 @@ export default function LocationPage() {
                 className="btn-update-location"
                 onClick={() => setShowUpdateLocationModal(true)}
               >
-                Update Location Manually
+                📍 Update Location Manually
               </button>
 
               {ambulance.status !== 'on_duty' && (
@@ -317,16 +457,19 @@ export default function LocationPage() {
                     backgroundColor: ambulance.status === 'available' ? '#6c757d' : '#28a745'
                   }}
                 >
-                  {ambulance.status === 'available' ? ' Go Offline' : ' Go Online'}
+                  {ambulance.status === 'available' ? '🌙 Go Offline' : '✅ Go Online'}
                 </button>
               )}
             </div>
           </div>
 
           {/* Current Location Map */}
-          {position && (
+          {position ? (
             <div className="location-map">
-              <h3>Current Location {isTracking && '🔴'}</h3>
+              <h3>
+                📍 Current Location 
+                {isTracking && <span style={{ color: '#dc3545' }}> 🔴</span>}
+              </h3>
               <MapContainer 
                 center={[position.lat, position.lng]} 
                 zoom={15} 
@@ -338,17 +481,69 @@ export default function LocationPage() {
                 />
                 <Marker position={[position.lat, position.lng]}>
                   <Popup>
-                    Your Ambulance Location<br />
-                    {isTracking && <strong> Live Tracking</strong>}
+                    <strong>Your Ambulance</strong><br />
+                    {ambulance.registration_number}<br />
+                    {isTracking && <span style={{ color: '#dc3545' }}><strong>🔴 Live Tracking</strong></span>}
                   </Popup>
                 </Marker>
               </MapContainer>
               
               {isTracking && (
-                <p style={{ marginTop: '10px', color: '#28a745', fontWeight: 'bold' }}>
-                  Sending location updates every 10 seconds
+                <p style={{ 
+                  marginTop: '10px', 
+                  color: '#28a745', 
+                  fontWeight: 'bold',
+                  textAlign: 'center'
+                }}>
+                  ✅ Sending location updates every 10 seconds
                 </p>
               )}
+            </div>
+          ) : (
+            <div className="location-map">
+              <div style={{ 
+                height: '400px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                backgroundColor: '#f5f5f5',
+                borderRadius: '8px'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  {locationLoading ? (
+                    <>
+                      <div className="spinner" style={{
+                        border: '4px solid #f3f3f3',
+                        borderTop: '4px solid #3498db',
+                        borderRadius: '50%',
+                        width: '40px',
+                        height: '40px',
+                        animation: 'spin 1s linear infinite',
+                        margin: '0 auto 16px'
+                      }}></div>
+                      <p style={{ color: '#666' }}>📍 Getting GPS location...</p>
+                    </>
+                  ) : (
+                    <>
+                      <p style={{ color: '#666', marginBottom: '16px' }}>⚠️ No GPS location available</p>
+                      <button 
+                        onClick={() => getCurrentLocation()}
+                        style={{
+                          padding: '10px 20px',
+                          backgroundColor: '#28a745',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '6px',
+                          cursor: 'pointer',
+                          fontSize: '16px'
+                        }}
+                      >
+                        📍 Get Current Location
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -359,7 +554,7 @@ export default function LocationPage() {
         <div className="modal-overlay" onClick={() => setShowRegisterModal(false)}>
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Register Ambulance</h2>
+              <h2>🚑 Register Ambulance</h2>
               <button className="close-btn" onClick={() => setShowRegisterModal(false)}>
                 &times;
               </button>
@@ -421,7 +616,7 @@ export default function LocationPage() {
                     className="btn-submit"
                     disabled={loading}
                   >
-                    {loading ? 'Registering...' : 'Register Ambulance'}
+                    {loading ? '⏳ Registering...' : '✅ Register Ambulance'}
                   </button>
                 </div>
               </form>
@@ -431,11 +626,11 @@ export default function LocationPage() {
       )}
 
       {/* Update Location Modal */}
-      {showUpdateLocationModal && position && (
+      {showUpdateLocationModal && (
         <div className="modal-overlay" onClick={() => setShowUpdateLocationModal(false)}>
           <div className="modal-container modal-large" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Update Ambulance Location</h2>
+              <h2>📍 Update Ambulance Location</h2>
               <button className="close-btn" onClick={() => setShowUpdateLocationModal(false)}>
                 &times;
               </button>
@@ -445,33 +640,70 @@ export default function LocationPage() {
               {error && <div className="alert alert-error">{error}</div>}
               {success && <div className="alert alert-success">{success}</div>}
 
-              <p className="map-instruction">
-                Click on the map to set your current location or use the button below to use your device's GPS
+              <p className="map-instruction" style={{ 
+                backgroundColor: '#e7f3ff', 
+                padding: '12px', 
+                borderRadius: '6px',
+                marginBottom: '16px'
+              }}>
+                💡 Click on the map to set your location, or use the button below to get your device's GPS location
               </p>
 
-              <button className="btn-use-gps" onClick={getCurrentLocation}>
-                📍 Use Current GPS Location
+              <button 
+                className="btn-use-gps" 
+                onClick={() => getCurrentLocation()}
+                disabled={locationLoading}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  backgroundColor: '#28a745',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '16px',
+                  marginBottom: '16px'
+                }}
+              >
+                {locationLoading ? '⏳ Getting GPS Location...' : '📍 Use Current GPS Location'}
               </button>
 
-              <MapContainer 
-                center={[position.lat, position.lng]} 
-                zoom={13} 
-                style={{ height: '400px', width: '100%', borderRadius: '8px', marginTop: '1rem' }}
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <LocationMarker position={position} setPosition={setPosition} />
-              </MapContainer>
+              {position ? (
+                <MapContainer 
+                  center={[position.lat, position.lng]} 
+                  zoom={13} 
+                  style={{ height: '400px', width: '100%', borderRadius: '8px' }}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <LocationMarker position={position} setPosition={setPosition} />
+                </MapContainer>
+              ) : (
+                <div style={{ 
+                  height: '400px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  backgroundColor: '#f5f5f5',
+                  borderRadius: '8px'
+                }}>
+                  <p style={{ color: '#666' }}>
+                    {locationLoading ? '⏳ Getting location...' : '📍 Click "Use Current GPS Location" to set your position'}
+                  </p>
+                </div>
+              )}
 
-              <div className="coordinates-display">
-                <p><strong>Selected Location:</strong></p>
-                <p>Latitude: {position.lat.toFixed(6)}</p>
-                <p>Longitude: {position.lng.toFixed(6)}</p>
-              </div>
+              {position && (
+                <div className="coordinates-display" style={{ marginTop: '16px' }}>
+                  <p><strong>📍 Selected Location:</strong></p>
+                  <p>Latitude: {position.lat.toFixed(6)}</p>
+                  <p>Longitude: {position.lng.toFixed(6)}</p>
+                </div>
+              )}
 
-              <div className="modal-actions">
+              <div className="modal-actions" style={{ marginTop: '20px' }}>
                 <button 
                   type="button" 
                   className="btn-secondary" 
@@ -484,9 +716,9 @@ export default function LocationPage() {
                   type="button" 
                   className="btn-submit"
                   onClick={handleUpdateLocation}
-                  disabled={loading}
+                  disabled={loading || !position}
                 >
-                  {loading ? 'Updating...' : 'Update Location'}
+                  {loading ? '⏳ Updating...' : '✅ Update Location'}
                 </button>
               </div>
             </div>
